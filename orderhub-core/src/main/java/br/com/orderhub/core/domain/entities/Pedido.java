@@ -17,18 +17,10 @@ public class Pedido {
     Long idCliente;
     Long idPagamento;
     List<Map<Integer, ProdutoDTO>> listaQtdProdutos;
-    @Setter
     StatusPedido status;
 
     public Pedido(Long idPedido, Long idCliente, Long idPagamento, List<Map<Integer, ProdutoDTO>> listaQtdProdutos, StatusPedido status) {
         setIdPedido(idPedido);
-        setIdCliente(idCliente);
-        setIdPagamento(idPagamento);
-        setListaQtdProdutos(listaQtdProdutos);
-        setStatus(status);
-    }
-
-    public Pedido(Long idCliente, Long idPagamento, List<Map<Integer, ProdutoDTO>> listaQtdProdutos, StatusPedido status) {
         setIdCliente(idCliente);
         setIdPagamento(idPagamento);
         setListaQtdProdutos(listaQtdProdutos);
