@@ -8,12 +8,12 @@ import br.com.orderhub.core.dto.produtos.ProdutoDTO;
 import br.com.orderhub.core.interfaces.IProdutoGateway;
 
 public class ProdutoController {
-    private IProdutoGateway gateway;
-    private BuscarProdutoPorId buscarProdutoPorId;
-    private BuscarProdutoPorNome buscarProdutoPorNome;
-    private CriarProduto criarProduto;
-    private EditarProduto editarProduto;
-    private DeletarProduto deletarProduto;
+    private final IProdutoGateway gateway;
+    private final BuscarProdutoPorId buscarProdutoPorId;
+    private final BuscarProdutoPorNome buscarProdutoPorNome;
+    private final CriarProduto criarProduto;
+    private final EditarProduto editarProduto;
+    private final DeletarProduto deletarProduto;
 
     public ProdutoController(IProdutoGateway gateway) {
         this.gateway = gateway;

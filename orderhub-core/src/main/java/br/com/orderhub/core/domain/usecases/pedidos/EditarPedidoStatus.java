@@ -15,7 +15,7 @@ public class EditarPedidoStatus {
     public Pedido run(Long idPedido, StatusPedido status) throws PedidoNaoEncontradoException {
         Pedido pedido = pedidoGateway.buscarPorId(idPedido);
         if(pedido == null) {
-            throw new PedidoNaoEncontradoException("Pedido com ID " + pedido.getIdPedido() + " nao foi encontrado");
+            throw new PedidoNaoEncontradoException("Pedido com ID " + idPedido + " nao foi encontrado");
         }
         return pedidoGateway.atualizarStatus(idPedido, status);
     }

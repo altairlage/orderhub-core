@@ -19,7 +19,7 @@ public class PedidoController {
     private final EditarPedidoStatus editarPedidoStatus;
     private final EditarPedidoTodo editarPedidoTodo;
 
-    public PedidoController(IPedidoGateway pedidoGateway, IClienteGateway clienteGateway, BuscarPedidoPorId buscarPedidoPorId, BuscarPedidosPorIdCliente buscarPedidosPorIdCliente, CriarPedido criarPedido, EditarPedidoStatus editarPedidoStatus, EditarPedidoTodo editarPedidoTodo) {
+    public PedidoController(IPedidoGateway pedidoGateway, IClienteGateway clienteGateway){
         this.pedidoGateway = pedidoGateway;
         this.clienteGateway = clienteGateway;
         this.buscarPedidoPorId = new BuscarPedidoPorId(this.pedidoGateway);

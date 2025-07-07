@@ -17,7 +17,6 @@ public class EditarProduto {
         if (produto == null) {
             throw new ProdutoNaoEncontradoException("Produto com ID " + produtoDTO.id() + "não encontrado");
         }
-        Produto produtoAtualizado = gateway.atualizar(produto);
-        return produtoAtualizado;
+        return gateway.atualizar(produto);
     }
 }
