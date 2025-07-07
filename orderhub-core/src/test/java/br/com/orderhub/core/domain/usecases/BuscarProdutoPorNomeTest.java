@@ -1,6 +1,7 @@
 package br.com.orderhub.core.domain.usecases;
 
 import br.com.orderhub.core.domain.entities.Produto;
+import br.com.orderhub.core.domain.usecases.produtos.BuscarProdutoPorNome;
 import br.com.orderhub.core.exceptions.ProdutoNaoEncontradoException;
 import br.com.orderhub.core.interfaces.IProdutoGateway;
 import org.junit.jupiter.api.BeforeEach;

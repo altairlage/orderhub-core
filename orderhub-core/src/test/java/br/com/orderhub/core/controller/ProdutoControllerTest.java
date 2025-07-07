@@ -1,8 +1,8 @@
 package br.com.orderhub.core.controller;
 
 import br.com.orderhub.core.domain.entities.Produto;
-import br.com.orderhub.core.dto.CriarProdutoDTO;
-import br.com.orderhub.core.dto.ProdutoDTO;
+import br.com.orderhub.core.dto.produtos.CriarProdutoDTO;
+import br.com.orderhub.core.dto.produtos.ProdutoDTO;
 import br.com.orderhub.core.interfaces.IProdutoGateway;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

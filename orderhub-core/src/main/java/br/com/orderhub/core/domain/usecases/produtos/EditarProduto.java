@@ -1,7 +1,7 @@
-package br.com.orderhub.core.domain.usecases;
+package br.com.orderhub.core.domain.usecases.produtos;
 
 import br.com.orderhub.core.domain.entities.Produto;
-import br.com.orderhub.core.dto.ProdutoDTO;
+import br.com.orderhub.core.dto.produtos.ProdutoDTO;
 import br.com.orderhub.core.exceptions.ProdutoNaoEncontradoException;
 import br.com.orderhub.core.interfaces.IProdutoGateway;
 

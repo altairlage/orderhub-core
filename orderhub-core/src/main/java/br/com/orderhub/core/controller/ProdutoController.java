@@ -2,9 +2,9 @@ package br.com.orderhub.core.controller;
 
 import br.com.orderhub.core.domain.entities.Produto;
 import br.com.orderhub.core.domain.presenters.ProdutoPresenter;
-import br.com.orderhub.core.domain.usecases.*;
-import br.com.orderhub.core.dto.CriarProdutoDTO;
-import br.com.orderhub.core.dto.ProdutoDTO;
+import br.com.orderhub.core.domain.usecases.produtos.*;
+import br.com.orderhub.core.dto.produtos.CriarProdutoDTO;
+import br.com.orderhub.core.dto.produtos.ProdutoDTO;
 import br.com.orderhub.core.interfaces.IProdutoGateway;
 
 public class ProdutoController {
