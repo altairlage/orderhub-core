@@ -2,7 +2,6 @@ package br.com.orderhub.core.controller;
 
 import br.com.orderhub.core.domain.entities.Produto;
 import br.com.orderhub.core.domain.presenters.ProdutoPresenter;
-import br.com.orderhub.core.domain.usecases.EditarProduto;
 import br.com.orderhub.core.domain.usecases.produtos.*;
 import br.com.orderhub.core.dto.produtos.CriarProdutoDTO;
 import br.com.orderhub.core.dto.produtos.ProdutoDTO;
