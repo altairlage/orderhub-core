@@ -1,7 +1,10 @@
 package br.com.orderhub.core.domain.presenters;
 
 import br.com.orderhub.core.domain.entities.Produto;
-import br.com.orderhub.core.dto.ProdutoDTO;
+import br.com.orderhub.core.dto.produtos.ProdutoDTO;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ProdutoPresenter {
 
@@ -12,5 +15,22 @@ public class ProdutoPresenter {
                 produto.getDescricao(),
                 produto.getPreco()
         );
+    }
+
+    public static Produto ToDomain(ProdutoDTO produtoDTO){
+        return new Produto(
+                produtoDTO.id(),
+                produtoDTO.nome(),
+                produtoDTO.descricao(),
+                produtoDTO.preco()
+        );
+    }
+
+    public static List<ProdutoDTO> ToListDTO(List<Produto> produtosLista) {
+        List<ProdutoDTO> listaResposta = new ArrayList<>();
+        for (Produto produto : produtosLista) {
+            listaResposta.add(ToDTO(produto));
+        }
+        return listaResposta;
     }
 }

@@ -1,4 +1,4 @@
-package br.com.orderhub.core.domain.usecases;
+package br.com.orderhub.core.domain.usecases.produtos;
 
 import br.com.orderhub.core.domain.entities.Produto;
 import br.com.orderhub.core.exceptions.ProdutoNaoEncontradoException;

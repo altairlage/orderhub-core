@@ -2,18 +2,21 @@ package br.com.orderhub.core.controller;
 
 import br.com.orderhub.core.domain.entities.Produto;
 import br.com.orderhub.core.domain.presenters.ProdutoPresenter;
-import br.com.orderhub.core.domain.usecases.*;
-import br.com.orderhub.core.dto.CriarProdutoDTO;
-import br.com.orderhub.core.dto.ProdutoDTO;
+import br.com.orderhub.core.domain.usecases.produtos.*;
+import br.com.orderhub.core.dto.produtos.CriarProdutoDTO;
+import br.com.orderhub.core.dto.produtos.ProdutoDTO;
 import br.com.orderhub.core.interfaces.IProdutoGateway;
 
+import java.util.List;
+
 public class ProdutoController {
-    private IProdutoGateway gateway;
-    private BuscarProdutoPorId buscarProdutoPorId;
-    private BuscarProdutoPorNome buscarProdutoPorNome;
-    private CriarProduto criarProduto;
-    private EditarProduto editarProduto;
-    private DeletarProduto deletarProduto;
+    private final IProdutoGateway gateway;
+    private final BuscarProdutoPorId buscarProdutoPorId;
+    private final BuscarProdutoPorNome buscarProdutoPorNome;
+    private final CriarProduto criarProduto;
+    private final EditarProduto editarProduto;
+    private final DeletarProduto deletarProduto;
+    private final ListarTodosProdutos listarTodosProdutos;
 
     public ProdutoController(IProdutoGateway gateway) {
         this.gateway = gateway;
@@ -22,6 +25,7 @@ public class ProdutoController {
         criarProduto = new CriarProduto(this.gateway);
         editarProduto = new EditarProduto(this.gateway);
         deletarProduto = new DeletarProduto(this.gateway);
+        listarTodosProdutos = new ListarTodosProdutos(this.gateway);
     }
 
     /*
@@ -56,6 +60,10 @@ public class ProdutoController {
 
     public void deletarProduto(Long id) {
         this.deletarProduto.run(id);
+    }
+
+    public List<ProdutoDTO> listarTodosProdutos(){
+        return ProdutoPresenter.ToListDTO(listarTodosProdutos.run());
     }
 
 
