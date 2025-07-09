@@ -10,4 +10,5 @@ public interface IClienteGateway {
     Cliente criar(Cliente cliente);
     Cliente atualizar(Cliente clienteAntigo, Cliente clienteAtualizado);
     void remover(Long id);
+    List<Cliente> listarTodos();
 }

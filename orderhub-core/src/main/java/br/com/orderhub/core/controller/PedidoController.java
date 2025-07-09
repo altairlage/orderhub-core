@@ -7,26 +7,31 @@ import br.com.orderhub.core.domain.usecases.pedidos.*;
 import br.com.orderhub.core.dto.pedidos.PedidoDTO;
 import br.com.orderhub.core.interfaces.IClienteGateway;
 import br.com.orderhub.core.interfaces.IPedidoGateway;
+import br.com.orderhub.core.interfaces.IProdutoGateway;
 
 import java.util.List;
 
 public class PedidoController {
     private final IPedidoGateway pedidoGateway;
     private final IClienteGateway clienteGateway;
+    private final IProdutoGateway produtoGateway;
     private final BuscarPedidoPorId buscarPedidoPorId;
     private final BuscarPedidosPorIdCliente buscarPedidosPorIdCliente;
     private final CriarPedido criarPedido;
     private final EditarPedidoStatus editarPedidoStatus;
-    private final EditarPedidoTodo editarPedidoTodo;
+    private final EditarPedido editarPedidoTodo;
+    private final ListarTodosPedidos listarTodosPedidos;
 
-    public PedidoController(IPedidoGateway pedidoGateway, IClienteGateway clienteGateway){
+    public PedidoController(IPedidoGateway pedidoGateway, IClienteGateway clienteGateway, IProdutoGateway produtoGateway){
         this.pedidoGateway = pedidoGateway;
         this.clienteGateway = clienteGateway;
+        this.produtoGateway = produtoGateway;
         this.buscarPedidoPorId = new BuscarPedidoPorId(this.pedidoGateway);
         this.buscarPedidosPorIdCliente = new BuscarPedidosPorIdCliente(this.pedidoGateway,this.clienteGateway);
-        this.criarPedido = new CriarPedido(this.pedidoGateway);
+        this.criarPedido = new CriarPedido(this.pedidoGateway, this.clienteGateway, this.produtoGateway);
         this.editarPedidoStatus = new EditarPedidoStatus(this.pedidoGateway);
-        this.editarPedidoTodo = new EditarPedidoTodo(this.pedidoGateway);
+        this.editarPedidoTodo = new EditarPedido(this.pedidoGateway);
+        this.listarTodosPedidos = new ListarTodosPedidos(this.pedidoGateway);
     }
 
     public PedidoDTO buscarPedidoPorId(Long id) {
@@ -49,5 +54,9 @@ public class PedidoController {
 
     public PedidoDTO editarPedidoTodo(PedidoDTO pedidoAtualizado){
         return PedidoPresenter.ToDTO(this.editarPedidoTodo.run(pedidoAtualizado));
+    }
+
+    public List<PedidoDTO> listarTodosPedidos(){
+        return PedidoPresenter.ToListDTO(listarTodosPedidos.run());
     }
 }

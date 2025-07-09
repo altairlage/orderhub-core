@@ -10,17 +10,17 @@ public class ClienteController {
     private final IClienteGateway gateway;
     private final AtualizarCliente atualizarCliente;
     private final BuscarClientePorId buscarClientePorId;
-    private final BuscarClientesPorDataNascimento buscarClientesPorDataNascimento;
     private final CriarCliente criarCliente;
     private final RemoverCliente removerCliente;
+    private final ListarTodosClientes listarTodosClientes;
 
     public ClienteController(IClienteGateway gateway) {
         this.gateway = gateway;
         this.atualizarCliente = new AtualizarCliente(gateway);
         this.buscarClientePorId = new BuscarClientePorId(gateway);
-        this.buscarClientesPorDataNascimento = new BuscarClientesPorDataNascimento(gateway);
         this.criarCliente = new CriarCliente(gateway);
         this.removerCliente = new RemoverCliente(gateway);
+        this.listarTodosClientes = new ListarTodosClientes(gateway);
     }
 
     public ClienteDTO criarCliente(ClienteDTO clienteDTO) {
@@ -39,7 +39,7 @@ public class ClienteController {
         return this.buscarClientePorId.run(id);
     }
 
-    public List<ClienteDTO> buscarClientesPorDataNascimento(String dataNascimento) {
-        return this.buscarClientesPorDataNascimento.run(dataNascimento);
+    public List<ClienteDTO> listarTodosClientes(){
+        return this.listarTodosClientes.run();
     }
 }

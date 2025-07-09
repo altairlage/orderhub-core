@@ -3,6 +3,7 @@ package br.com.orderhub.core.domain.usecases.pedidos;
 import br.com.orderhub.core.domain.entities.Pedido;
 import br.com.orderhub.core.domain.enums.StatusPedido;
 import br.com.orderhub.core.exceptions.PedidoNaoEncontradoException;
+import br.com.orderhub.core.exceptions.PedidoStatusException;
 import br.com.orderhub.core.interfaces.IPedidoGateway;
 
 public class EditarPedidoStatus {
@@ -17,6 +18,11 @@ public class EditarPedidoStatus {
         if(pedido == null) {
             throw new PedidoNaoEncontradoException("Pedido com ID " + idPedido + " nao foi encontrado");
         }
+
+        if (!pedido.getStatus().equals(StatusPedido.ABERTO)) {
+            throw new PedidoStatusException("Pedido com ID " + idPedido + " não está aberto");
+        }
+
         return pedidoGateway.atualizarStatus(idPedido, status);
     }
 }

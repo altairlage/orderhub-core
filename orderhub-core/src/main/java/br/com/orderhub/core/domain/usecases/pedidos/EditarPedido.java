@@ -6,11 +6,11 @@ import br.com.orderhub.core.dto.pedidos.PedidoDTO;
 import br.com.orderhub.core.exceptions.PedidoNaoEncontradoException;
 import br.com.orderhub.core.interfaces.IPedidoGateway;
 
-public class EditarPedidoTodo {
+public class EditarPedido {
     private final IPedidoGateway pedidoGateway;
 
 
-    public EditarPedidoTodo(IPedidoGateway pedidoGateway) {
+    public EditarPedido(IPedidoGateway pedidoGateway) {
         this.pedidoGateway = pedidoGateway;
     }
 
@@ -19,6 +19,6 @@ public class EditarPedidoTodo {
         if (pedidoAntigo == null) {
             throw new PedidoNaoEncontradoException("Pedido com ID " + pedidoAtualizado.idPedido() + " nao foi encontrado");
         }
-        return pedidoGateway.atualizarTudo(pedidoAntigo, PedidoPresenter.ToDomain(pedidoAtualizado));
+        return pedidoGateway.atualizar(pedidoAntigo, PedidoPresenter.ToDomain(pedidoAtualizado));
     }
 }
