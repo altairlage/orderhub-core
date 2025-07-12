@@ -1,7 +1,6 @@
 package br.com.orderhub.core.domain.entities;
 
 import br.com.orderhub.core.domain.enums.StatusPedido;
-import br.com.orderhub.core.dto.produtos.ProdutoDTO;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
@@ -61,7 +60,7 @@ public class Pedido {
         if (this.status == null && !status.equals(StatusPedido.ABERTO))
             throw new IllegalArgumentException("Status inicial do Pedido só pode ser 'ABERTO'");
 
-        if (this.status.equals(StatusPedido.ABERTO) && !status.toString().contains("FECHADO"))
+        if (this.status != null && this.status.equals(StatusPedido.ABERTO) && !status.toString().contains("FECHADO"))
             throw new IllegalArgumentException("Pedido com status 'ABERTO' só pode ser alterado para algum status 'FECHADO'");
         this.status = status;
     }
