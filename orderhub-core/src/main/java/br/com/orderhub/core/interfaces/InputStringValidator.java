@@ -2,7 +2,7 @@ package br.com.orderhub.core.interfaces;
 
 import java.util.regex.Pattern;
 
-public class InputValidator {
+public class InputStringValidator {
     /************
      * TODO
      * TIRAR DÚVIDA
@@ -18,6 +18,10 @@ public class InputValidator {
             "^([0][1-9]|[12][0-9]|3[01])/([0][1-9]|1[0-2])/\\d{4}$"
     );
 
+    private static final Pattern TELEPHONE_PATTERN = Pattern.compile(
+            "^\\(\\d{2}\\) \\d{5}-\\d{4}$"
+    );
+
 
     public static boolean isValidEmail(String email) {
         return email != null && EMAIL_PATTERN.matcher(email).matches();
@@ -25,6 +29,10 @@ public class InputValidator {
 
     public static boolean isValidDate(String date) {
         return date != null && DATE_PATTERN.matcher(date).matches();
+    }
+
+    public static boolean isValidTelephone(String telephone) {
+        return telephone != null && TELEPHONE_PATTERN.matcher(telephone).matches();
     }
 }
 

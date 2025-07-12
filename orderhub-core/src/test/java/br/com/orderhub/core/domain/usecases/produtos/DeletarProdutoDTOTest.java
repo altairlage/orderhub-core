@@ -1,7 +1,6 @@
-package br.com.orderhub.core.domain.usecases;
+package br.com.orderhub.core.domain.usecases.produtos;
 
 import br.com.orderhub.core.domain.entities.Produto;
-import br.com.orderhub.core.domain.usecases.produtos.DeletarProduto;
 import br.com.orderhub.core.exceptions.ProdutoNaoEncontradoException;
 import br.com.orderhub.core.interfaces.IProdutoGateway;
 import org.junit.jupiter.api.BeforeEach;
@@ -10,7 +9,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-public class DeletarProdutoTest {
+public class DeletarProdutoDTOTest {
 
     private IProdutoGateway gateway;
     private DeletarProduto deletarProduto;

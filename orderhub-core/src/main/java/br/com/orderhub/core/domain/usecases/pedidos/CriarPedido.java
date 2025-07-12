@@ -27,19 +27,19 @@ public class CriarPedido {
     }
 
     public Pedido run(PedidoDTO pedidoDTO) {
-        final Cliente cliente = clienteGateway.buscarPorId(pedidoDTO.idCliente());
+        final Cliente cliente = clienteGateway.buscarPorId(pedidoDTO.cliente().id());
         if (cliente == null) {
-            throw new ClienteNaoEncontradoException("Cliente com ID: " + pedidoDTO.idCliente() + " não encontrado");
+            throw new ClienteNaoEncontradoException("Cliente com ID: " + pedidoDTO.cliente().id() + " não encontrado");
         }
 
-        int index = 0;
         for(Map<Integer, ProdutoDTO> produtoDTOMap : pedidoDTO.listaQtdProdutos()){
-            ProdutoDTO produtoDTO = produtoDTOMap.get(index);
-            Produto produto = produtoGateway.buscarPorId(produtoDTO.id());
-            if (produto == null) {
-                throw new ProdutoNaoEncontradoException("Produto com ID: " + produtoDTO.id() + " não encontrado");
+            for (Map.Entry<Integer, ProdutoDTO> entry : produtoDTOMap.entrySet()) {
+                Produto produto = produtoGateway.buscarPorId(entry.getValue().id());
+                if (produto == null) {
+                    throw new ProdutoNaoEncontradoException("Produto com ID: " + entry.getValue().id() + " não encontrado");
+                }
             }
-            index++;
+
         }
         final Pedido pedido = PedidoPresenter.ToDomain(pedidoDTO);
         return pedidoGateway.criar(pedido);

@@ -1,7 +1,6 @@
-package br.com.orderhub.core.domain.usecases;
+package br.com.orderhub.core.domain.usecases.produtos;
 
 import br.com.orderhub.core.domain.entities.Produto;
-import br.com.orderhub.core.domain.usecases.produtos.CriarProduto;
 import br.com.orderhub.core.dto.produtos.CriarProdutoDTO;
 import br.com.orderhub.core.exceptions.ProdutoJaExisteException;
 import br.com.orderhub.core.interfaces.IProdutoGateway;
@@ -11,7 +10,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-public class CriarProdutoTest {
+public class CriarProdutoDTOTest {
 
     private IProdutoGateway gateway;
     private CriarProduto criarProduto;

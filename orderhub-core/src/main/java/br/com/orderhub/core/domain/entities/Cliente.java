@@ -1,12 +1,10 @@
 package br.com.orderhub.core.domain.entities;
 
-import br.com.orderhub.core.interfaces.InputValidator;
+import br.com.orderhub.core.interfaces.InputStringValidator;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import lombok.Setter;
 
 @Getter
-@Setter
 @EqualsAndHashCode
 public class Cliente {
     private Long id;
@@ -28,27 +26,47 @@ public class Cliente {
     }
 
     public void setId(Long id) {
-        if (id != null && id <= 0) {
+        if (id == null || id <= 0) {
             throw new IllegalArgumentException("ID vazio ou inválido");
         }
         this.id = id;
     }
 
     public void setDataNascimento(String dataNascimento) {
-        if (InputValidator.isValidDate(dataNascimento)) {
+        if (!InputStringValidator.isValidDate(dataNascimento)) {
             throw new IllegalArgumentException("Datas devem estar no padrão DD/MM/YYYY");
         }
         this.dataNascimento = dataNascimento;
     }
 
     public void setEmail(String email) {
-        if (email != null && email.trim().length() > 0) {
+        if (email == null || email.trim().isEmpty()) {
             throw new IllegalArgumentException("Email vazio ou inválido");
         }
-        if (InputValidator.isValidEmail(email)) {
+
+        if (!InputStringValidator.isValidEmail(email)) {
             throw new IllegalArgumentException("Email deve estar no padrão xxx@email.com ou yyyy@email.com.br");
         }
 
         this.email = email;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public void setEndereco(String endereco) {
+        this.endereco = endereco;
+    }
+
+    public void setNumeroContato(String numeroContato) {
+        if (!InputStringValidator.isValidTelephone(numeroContato))
+            throw new IllegalArgumentException("Número de contato deve estar no padrão (99) 99999-9999");
+
+        this.numeroContato = numeroContato;
+    }
+
+    public void setInfoPagamento(String infoPagamento) {
+        this.infoPagamento = infoPagamento;
     }
 }

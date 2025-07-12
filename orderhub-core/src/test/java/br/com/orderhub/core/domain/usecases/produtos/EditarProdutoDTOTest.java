@@ -1,7 +1,5 @@
-package br.com.orderhub.core.domain.usecases;
+package br.com.orderhub.core.domain.usecases.produtos;
 
-import br.com.orderhub.core.domain.entities.Produto;
-import br.com.orderhub.core.domain.usecases.produtos.EditarProduto;
 import br.com.orderhub.core.dto.produtos.ProdutoDTO;
 import br.com.orderhub.core.exceptions.ProdutoNaoEncontradoException;
 import br.com.orderhub.core.interfaces.IProdutoGateway;
@@ -11,7 +9,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-public class EditarProdutoTest {
+public class EditarProdutoDTOTest {
 
     private IProdutoGateway gateway;
     private EditarProduto editarProduto;
@@ -25,18 +23,18 @@ public class EditarProdutoTest {
     @Test
     public void deveEditarProdutoQuandoExistir() {
         ProdutoDTO dto = new ProdutoDTO(1L, "Café", "Café especial", 20.0);
-        Produto existente = new Produto(1L, "Café", "Desc", 15.0);
-        Produto atualizado = new Produto(1L, "Café", "Café especial", 20.0);
+        br.com.orderhub.core.domain.entities.Produto existente = new br.com.orderhub.core.domain.entities.Produto(1L, "Café", "Desc", 15.0);
+        br.com.orderhub.core.domain.entities.Produto atualizado = new br.com.orderhub.core.domain.entities.Produto(1L, "Café", "Café especial", 20.0);
 
         when(gateway.buscarPorId(1L)).thenReturn(existente);
-        when(gateway.atualizar(any(Produto.class))).thenReturn(atualizado);
+        when(gateway.atualizar(any(br.com.orderhub.core.domain.entities.Produto.class))).thenReturn(atualizado);
 
-        Produto resultado = editarProduto.run(dto);
+        br.com.orderhub.core.domain.entities.Produto resultado = editarProduto.run(dto);
 
         assertNotNull(resultado);
         assertEquals("Café especial", resultado.getDescricao());
         assertEquals(20.0, resultado.getPreco());
-        verify(gateway).atualizar(any(Produto.class));
+        verify(gateway).atualizar(any(br.com.orderhub.core.domain.entities.Produto.class));
     }
 
     @Test

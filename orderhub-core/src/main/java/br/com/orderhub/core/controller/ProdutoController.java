@@ -1,6 +1,5 @@
 package br.com.orderhub.core.controller;
 
-import br.com.orderhub.core.domain.entities.Produto;
 import br.com.orderhub.core.domain.presenters.ProdutoPresenter;
 import br.com.orderhub.core.domain.usecases.produtos.*;
 import br.com.orderhub.core.dto.produtos.CriarProdutoDTO;
@@ -41,12 +40,12 @@ public class ProdutoController {
     */
 
     public ProdutoDTO buscarProdutoPorId(Long id) {
-        Produto produto = this.buscarProdutoPorId.run(id);
+        br.com.orderhub.core.domain.entities.Produto produto = this.buscarProdutoPorId.run(id);
         return ProdutoPresenter.ToDTO(produto);
     }
 
     public ProdutoDTO buscarProdutoPorNome(String nome) {
-        Produto produto = this.buscarProdutoPorNome.run(nome);
+        br.com.orderhub.core.domain.entities.Produto produto = this.buscarProdutoPorNome.run(nome);
         return ProdutoPresenter.ToDTO(produto);
     }
 

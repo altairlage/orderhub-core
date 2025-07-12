@@ -1,6 +1,5 @@
 package br.com.orderhub.core.domain.usecases.produtos;
 
-import br.com.orderhub.core.domain.entities.Produto;
 import br.com.orderhub.core.dto.produtos.ProdutoDTO;
 import br.com.orderhub.core.exceptions.ProdutoNaoEncontradoException;
 import br.com.orderhub.core.interfaces.IProdutoGateway;
@@ -12,8 +11,8 @@ public class EditarProduto {
         this.gateway = gateway;
     }
 
-    public Produto run(ProdutoDTO produtoDTO) {
-        Produto produto = gateway.buscarPorId(produtoDTO.id());
+    public br.com.orderhub.core.domain.entities.Produto run(ProdutoDTO produtoDTO) {
+        br.com.orderhub.core.domain.entities.Produto produto = gateway.buscarPorId(produtoDTO.id());
         if (produto == null) {
             throw new ProdutoNaoEncontradoException("Produto com ID " + produtoDTO.id() + "não encontrado");
         }

@@ -6,6 +6,7 @@ import br.com.orderhub.core.domain.enums.StatusPedido;
 import java.util.List;
 
 public interface IPedidoGateway {
+    // Usar Optional para evitar retornos nulos
     Pedido buscarPorId(Long idPedido);
     List<Pedido> buscarPorIdCliente(Long idCliente);
     Pedido criar(Pedido pedido);
