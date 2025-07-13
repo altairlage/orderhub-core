@@ -27,6 +27,13 @@ public class Pedido {
         setStatus(status);
     }
 
+    public Pedido(Cliente cliente, Long idPagamento, List<Map<Integer, Produto>> listaQtdProdutos, StatusPedido status) {
+        setCliente(cliente);
+        setIdPagamento(idPagamento);
+        setListaQtdProdutos(listaQtdProdutos);
+        setStatus(status);
+    }
+
     public void setIdPedido(Long idPedido) {
         if (idPedido == null || idPedido <= 0) {
             throw new IllegalArgumentException("ID do pedido está vazio ou é inválido");
@@ -56,9 +63,6 @@ public class Pedido {
 
     public void setStatus(StatusPedido status) {
         if (status == null) throw new IllegalArgumentException("Status do pedido está vazio ou é inválido");
-
-        if (this.status == null && !status.equals(StatusPedido.ABERTO))
-            throw new IllegalArgumentException("Status inicial do Pedido só pode ser 'ABERTO'");
 
         if (this.status != null && this.status.equals(StatusPedido.ABERTO) && !status.toString().contains("FECHADO"))
             throw new IllegalArgumentException("Pedido com status 'ABERTO' só pode ser alterado para algum status 'FECHADO'");

@@ -17,7 +17,7 @@ public class PedidoPresenter {
                 pedido.getIdPedido(),
                 ClientePresenter.ToDTO(pedido.getCliente()),
                 pedido.getIdPagamento(),
-                PedidoPresenter.ToListDTO(pedido.getListaQtdProdutos()),
+                ToProductListDTO(pedido.getListaQtdProdutos()),
                 pedido.getStatus());
     }
 
@@ -26,11 +26,20 @@ public class PedidoPresenter {
                 pedidoDTO.idPedido(),
                 ClientePresenter.ToDomain(pedidoDTO.cliente()),
                 pedidoDTO.idPagamento(),
-                PedidoPresenter.ToListDomain(pedidoDTO.listaQtdProdutos()),
+                ToProductListDomain(pedidoDTO.listaQtdProdutos()),
                 pedidoDTO.status());
     }
 
-    public static List<Map<Integer, ProdutoDTO>> ToListDTO(List<Map<Integer, Produto>> produtosLista) {
+    public static List<PedidoDTO> ToListDTO(List<Pedido> pedidosLista) {
+        List<PedidoDTO> listaResposta = new ArrayList<>();
+
+        for (Pedido pedido : pedidosLista) {
+            listaResposta.add(ToDTO(pedido));
+        }
+        return listaResposta;
+    }
+
+    public static List<Map<Integer, ProdutoDTO>> ToProductListDTO(List<Map<Integer, Produto>> produtosLista) {
         List<Map<Integer, ProdutoDTO>> listaRespostaDTO = new ArrayList<>();
 
         for (Map<Integer, Produto> map : produtosLista) {
@@ -48,7 +57,7 @@ public class PedidoPresenter {
         return listaRespostaDTO;
     }
 
-    public static List<Map<Integer, Produto>> ToListDomain(List<Map<Integer, ProdutoDTO>> produtosDTOLista) {
+    public static List<Map<Integer, Produto>> ToProductListDomain(List<Map<Integer, ProdutoDTO>> produtosDTOLista) {
         List<Map<Integer, Produto>> listaRespostaDomain = new ArrayList<>();
 
         for (Map<Integer, ProdutoDTO> map : produtosDTOLista) {

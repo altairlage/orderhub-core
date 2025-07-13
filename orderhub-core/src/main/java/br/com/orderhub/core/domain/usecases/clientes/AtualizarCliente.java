@@ -14,9 +14,9 @@ public class AtualizarCliente {
     }
 
     public ClienteDTO run(ClienteDTO clienteAtualizado) {
-        Cliente clienteAntigo = gateway.buscarPorId(clienteAtualizado.id());
+        Cliente clienteAntigo = gateway.buscarPorEmail(clienteAtualizado.email());
         if (clienteAntigo == null) {
-            throw new ClienteNaoEncontradoException("Cliente com ID: " + clienteAtualizado.id() + " não encontrado");
+            throw new ClienteNaoEncontradoException("Cliente com email: " + clienteAtualizado.email() + " não encontrado");
         }
         return ClientePresenter.ToDTO(gateway.atualizar(clienteAntigo, ClientePresenter.ToDomain(clienteAtualizado)));
     }

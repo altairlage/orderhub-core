@@ -23,6 +23,6 @@ public class EditarPedidoStatus {
             throw new PedidoStatusException("Pedido com ID " + idPedido + " não está aberto");
         }
 
-        return pedidoGateway.atualizarStatus(idPedido, status);
+        return pedidoGateway.editarStatus(idPedido, status);
     }
 }

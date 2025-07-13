@@ -9,7 +9,8 @@ import java.util.List;
 public class ClientePresenter {
 
     public static ClienteDTO ToDTO(Cliente cliente){
-        return new ClienteDTO(cliente.getId(),
+        return new ClienteDTO(
+                cliente.getId(),
                 cliente.getNome(),
                 cliente.getDataNascimento(),
                 cliente.getEndereco(),

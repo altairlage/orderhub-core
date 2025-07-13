@@ -10,6 +10,7 @@ public class ClienteController {
     private final IClienteGateway gateway;
     private final AtualizarCliente atualizarCliente;
     private final BuscarClientePorId buscarClientePorId;
+    private final BuscarClientePorEmail buscarClientePorEmail;
     private final CriarCliente criarCliente;
     private final RemoverCliente removerCliente;
     private final ListarTodosClientes listarTodosClientes;
@@ -18,6 +19,7 @@ public class ClienteController {
         this.gateway = gateway;
         this.atualizarCliente = new AtualizarCliente(gateway);
         this.buscarClientePorId = new BuscarClientePorId(gateway);
+        this.buscarClientePorEmail = new BuscarClientePorEmail(gateway);
         this.criarCliente = new CriarCliente(gateway);
         this.removerCliente = new RemoverCliente(gateway);
         this.listarTodosClientes = new ListarTodosClientes(gateway);
@@ -37,6 +39,10 @@ public class ClienteController {
 
     public ClienteDTO buscarClientePorId(Long id) {
         return this.buscarClientePorId.run(id);
+    }
+
+    public ClienteDTO buscarClientePorEmail(String email) {
+        return this.buscarClientePorEmail.run(email);
     }
 
     public List<ClienteDTO> listarTodosClientes(){

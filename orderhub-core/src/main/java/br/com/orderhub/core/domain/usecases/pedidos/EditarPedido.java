@@ -19,6 +19,6 @@ public class EditarPedido {
         if (pedidoAntigo == null) {
             throw new PedidoNaoEncontradoException("Pedido com ID " + pedidoAtualizado.idPedido() + " nao foi encontrado");
         }
-        return pedidoGateway.atualizar(pedidoAntigo, PedidoPresenter.ToDomain(pedidoAtualizado));
+        return pedidoGateway.editar(pedidoAntigo, PedidoPresenter.ToDomain(pedidoAtualizado));
     }
 }

@@ -10,7 +10,7 @@ public interface IPedidoGateway {
     Pedido buscarPorId(Long idPedido);
     List<Pedido> buscarPorIdCliente(Long idCliente);
     Pedido criar(Pedido pedido);
-    Pedido atualizar(Pedido pedidoAntigo, Pedido pedidoAtualizado);
-    Pedido atualizarStatus(Long idPedido,StatusPedido status);
+    Pedido editar(Pedido pedidoAntigo, Pedido pedidoAtualizado);
+    Pedido editarStatus(Long idPedido, StatusPedido status);
     List<Pedido> listarTodos();
 }
