@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class ProdutoDTOTest {
+public class ProdutoTest {
 
     @Test
     public void deveCriarProdutoComDadosCorretos() {
