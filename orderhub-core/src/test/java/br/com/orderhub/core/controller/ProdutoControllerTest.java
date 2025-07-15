@@ -1,11 +1,14 @@
 package br.com.orderhub.core.controller;
 
 import br.com.orderhub.core.domain.entities.Produto;
-import br.com.orderhub.core.dto.CriarProdutoDTO;
-import br.com.orderhub.core.dto.ProdutoDTO;
+import br.com.orderhub.core.dto.produtos.CriarProdutoDTO;
+import br.com.orderhub.core.dto.produtos.ProdutoDTO;
 import br.com.orderhub.core.interfaces.IProdutoGateway;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.util.Arrays;
+import java.util.List;
 
 import static org.mockito.Mockito.*;
 import static org.junit.jupiter.api.Assertions.*;
@@ -84,5 +87,18 @@ public class ProdutoControllerTest {
         controller.deletarProduto(3L);
 
         verify(gateway).deletar(3L);
+    }
+
+    @Test
+    void deveListarProdutosComSucesso(){
+        Produto produto1 = new Produto(1L, "Salgadinho de Presunto", "Feito de milho", 15.0);
+        Produto produto2 = new Produto(1L, "Salgadinho de Queijo", "Feito de milho", 15.0);
+
+        when(gateway.listarTodos()).thenReturn(Arrays.asList(produto1, produto2));
+
+        List<ProdutoDTO> resultado = controller.listarTodosProdutos();
+
+        assertNotNull(resultado);
+        assertFalse(resultado.isEmpty());
     }
 }
