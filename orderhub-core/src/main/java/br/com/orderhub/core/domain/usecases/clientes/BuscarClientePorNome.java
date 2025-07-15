@@ -7,21 +7,18 @@ import br.com.orderhub.core.exceptions.ClienteNaoEncontradoException;
 import br.com.orderhub.core.interfaces.IClienteGateway;
 import br.com.orderhub.core.interfaces.InputStringValidator;
 
-public class BuscarClientePorEmail {
+public class BuscarClientePorNome {
     private final IClienteGateway clienteGateway;
 
-    public BuscarClientePorEmail(IClienteGateway clienteGateway) {
+    public BuscarClientePorNome(IClienteGateway clienteGateway) {
         this.clienteGateway = clienteGateway;
     }
 
-    public ClienteDTO run(String email) {
-        if (!InputStringValidator.isValidEmail(email)) {
-            throw new IllegalArgumentException("Email invalido");
-        }
+    public ClienteDTO run(String nome) {
+        final Cliente cliente = clienteGateway.buscarPorNome(nome);
 
-        final Cliente cliente = clienteGateway.buscarPorEmail(email);
         if (cliente == null) {
-            throw new ClienteNaoEncontradoException("Cliente com email " + email + " nao encontrado");
+            throw new ClienteNaoEncontradoException("Cliente nao encontrado");
         }
         return ClientePresenter.ToDTO(cliente);
     }
