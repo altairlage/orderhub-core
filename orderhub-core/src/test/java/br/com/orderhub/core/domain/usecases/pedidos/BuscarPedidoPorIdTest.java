@@ -34,6 +34,7 @@ public class BuscarPedidoPorIdTest {
 
         Cliente cliente = new Cliente(1L,
                 "Jorge",
+                "123.456.789.10",
                 "07/12/2015",
                 "",
                 "(99) 99999-9999",

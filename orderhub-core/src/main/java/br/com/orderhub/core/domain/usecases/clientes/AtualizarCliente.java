@@ -14,10 +14,11 @@ public class AtualizarCliente {
     }
 
     public ClienteDTO run(ClienteDTO clienteAtualizado) {
-        Cliente clienteAntigo = gateway.buscarPorEmail(clienteAtualizado.email());
+        Cliente clienteAntigo = gateway.buscarPorCpf(clienteAtualizado.cpf());
+
         if (clienteAntigo == null) {
-            throw new ClienteNaoEncontradoException("Cliente com email: " + clienteAtualizado.email() + " não encontrado");
+            throw new ClienteNaoEncontradoException("Cliente com cpf: " + clienteAtualizado.cpf() + " não encontrado.");
         }
-        return ClientePresenter.ToDTO(gateway.atualizar(clienteAntigo, ClientePresenter.ToDomain(clienteAtualizado)));
+        return ClientePresenter.ToDTO(gateway.atualizar(ClientePresenter.ToDomain(clienteAtualizado)));
     }
 }

@@ -30,9 +30,9 @@ public class CriarPedido {
     }
 
     public Pedido run(CriarPedidoDTO pedidoDTO) {
-        final Cliente cliente = clienteGateway.buscarPorEmail(pedidoDTO.clienteDTO().email());
+        final Cliente cliente = clienteGateway.buscarPorCpf(pedidoDTO.clienteDTO().email());
         if (cliente == null) {
-            throw new ClienteNaoEncontradoException("Cliente com email: " + pedidoDTO.clienteDTO().email() + " não encontrado");
+            throw new ClienteNaoEncontradoException("Cliente com CPF: " + pedidoDTO.clienteDTO().cpf() + " não encontrado");
         }
 
         List<Map<Integer, Produto>> listaProdutos = new ArrayList<>();

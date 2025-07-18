@@ -66,6 +66,7 @@ public class CriarPedidoTest {
         clienteDTO = new ClienteDTO(
                 1L,
                 "Adamastor",
+                "123.456.789.10",
                 "25/01/1900",
                 "R. Teste",
                 "(11) 91234-5678",
@@ -76,6 +77,7 @@ public class CriarPedidoTest {
         clienteCriado = new Cliente(
                 1L,
                 "Adamastor",
+                "123.456.789.10",
                 "25/01/1900",
                 "R. Teste",
                 "(11) 91234-5678",
@@ -90,7 +92,7 @@ public class CriarPedidoTest {
 
     @Test
     public void deveCriarPedidoComSucesso(){
-        when(clienteGateway.buscarPorEmail(any(String.class))).thenReturn(clienteCriado);
+        when(clienteGateway.buscarPorCpf(any(String.class))).thenReturn(clienteCriado);
         when(produtoGateway.buscarPorNome(any(String.class))).thenReturn(produtoCriado1);
         when(pedidoGateway.criar(any(Pedido.class))).thenReturn(pedidoCriado1);
 
@@ -102,7 +104,7 @@ public class CriarPedidoTest {
 
     @Test
     public void deveLancarExcecaoQuandoClienteNaoExiste(){
-        when(clienteGateway.buscarPorEmail(any(String.class))).thenReturn(null);
+        when(clienteGateway.buscarPorCpf(any(String.class))).thenReturn(null);
 
         assertThrows(ClienteNaoEncontradoException.class, () -> criarPedido.run(criarPedidoDTO));
     }

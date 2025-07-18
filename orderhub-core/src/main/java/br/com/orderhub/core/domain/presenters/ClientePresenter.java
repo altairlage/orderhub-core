@@ -12,6 +12,7 @@ public class ClientePresenter {
         return new ClienteDTO(
                 cliente.getId(),
                 cliente.getNome(),
+                cliente.getCpf(),
                 cliente.getDataNascimento(),
                 cliente.getEndereco(),
                 cliente.getNumeroContato(),
@@ -23,6 +24,7 @@ public class ClientePresenter {
         return new Cliente(
                 clienteDTO.id(),
                 clienteDTO.nome(),
+                clienteDTO.cpf(),
                 clienteDTO.dataNascimento(),
                 clienteDTO.endereco(),
                 clienteDTO.numeroContato(),

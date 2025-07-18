@@ -34,5 +34,10 @@ public class InputStringValidator {
     public static boolean isValidTelephone(String telephone) {
         return telephone != null && TELEPHONE_PATTERN.matcher(telephone).matches();
     }
+
+    public static boolean isValidCpf(String cpf) {
+        String cpfRegex = "^\\d{3}\\.?\\d{3}\\.?\\d{3}-?\\d{2}$";
+        return cpf != null && cpf.matches(cpfRegex);
+    }
 }
 

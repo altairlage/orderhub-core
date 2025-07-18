@@ -9,15 +9,27 @@ import lombok.Getter;
 public class Cliente {
     private Long id;
     private String nome;
+    private String cpf;
     private String dataNascimento;
     private String endereco;
     private String numeroContato;
     private String email;
     private String infoPagamento;
 
-    public Cliente(Long id, String nome, String dataNascimento, String endereco, String numeroContato, String email, String infoPagamento) {
+    public Cliente(Long id, String nome, String cpf, String dataNascimento, String endereco, String numeroContato, String email, String infoPagamento) {
         this.setId(id);
         this.setNome(nome);
+        this.setCpf(cpf);
+        this.setDataNascimento(dataNascimento);
+        this.setEndereco(endereco);
+        this.setNumeroContato(numeroContato);
+        this.setEmail(email);
+        this.setInfoPagamento(infoPagamento);
+    }
+
+    public Cliente(String nome, String cpf, String dataNascimento, String endereco, String numeroContato, String email, String infoPagamento) {
+        this.setNome(nome);
+        this.setCpf(cpf);
         this.setDataNascimento(dataNascimento);
         this.setEndereco(endereco);
         this.setNumeroContato(numeroContato);
@@ -53,6 +65,16 @@ public class Cliente {
 
     public void setNome(String nome) {
         this.nome = nome;
+    }
+
+    public void setCpf(String cpf) {
+        if(cpf == null || cpf.trim().isEmpty()) {
+            throw new IllegalArgumentException("CPF vazio ou invalido");
+        }
+
+        if(InputStringValidator.isValidCpf(cpf)) {
+            this.cpf = cpf;
+        }
     }
 
     public void setEndereco(String endereco) {

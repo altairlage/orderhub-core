@@ -7,9 +7,10 @@ import java.util.List;
 public interface IClienteGateway {
     // Usar Optional para evitar retornos nulos
     Cliente buscarPorId(Long id);
-    Cliente buscarPorEmail(String email);
+    Cliente buscarPorCpf(String cpf);
+    Cliente buscarPorNome(String nome);
     Cliente criar(Cliente cliente);
-    Cliente atualizar(Cliente clienteAntigo, Cliente clienteAtualizado);
+    Cliente atualizar(Cliente cliente);
     void remover(Long id);
     List<Cliente> listarTodos();
 }
