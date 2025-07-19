@@ -95,7 +95,7 @@ public class PedidoControllerTest {
 
     @Test
     public void deveCriarPedidoComSucesso(){
-        when(clienteGateway.buscarPorCpf("email@email.com")).thenReturn(clienteCriado);
+        when(clienteGateway.buscarPorCpf("123.456.789.10")).thenReturn(clienteCriado);
         when(produtoGateway.buscarPorNome("Arroz")).thenReturn(produtoCriado1);
         when(produtoGateway.buscarPorNome("Feijão")).thenReturn(produtoCriado2);
 
