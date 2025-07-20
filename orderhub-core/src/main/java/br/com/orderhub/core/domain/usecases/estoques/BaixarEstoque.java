@@ -16,6 +16,10 @@ public class BaixarEstoque {
     }
 
     public void executar(String sku, int quantidade) {
+        if (quantidade <= 0) {
+            throw new IllegalArgumentException("A quantidade solicitada deve ser maior que zero.");
+        }
+
         Supplier<EstoqueNaoEncontradoException> exception =
                 () -> new EstoqueNaoEncontradoException("Estoque não encontrado para o SKU: " + sku);
 
