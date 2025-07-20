@@ -10,12 +10,9 @@ import java.util.Map;
 @Getter
 @EqualsAndHashCode
 public class Pedido {
-    // Adicionar regras de negócio para calculo do valor total
-    // e alteração de status para caso sejam necessários  e, também, edição da lista de produtos
-    // em outros casos de uso
     private Long idPedido;
     private Cliente cliente;
-    private Long idPagamento; // Trocar para private Pagamento pagamento; quando houver Pagamento.java
+    private Long idPagamento; // Trocar para "private Pagamento pagamento;" quando houver Pagamento.java
     private List<Map<Integer, Produto>> listaQtdProdutos;
     private StatusPedido status = null;
 
