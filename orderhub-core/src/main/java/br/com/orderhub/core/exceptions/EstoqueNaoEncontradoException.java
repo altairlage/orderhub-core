@@ -1,8 +1,7 @@
 package br.com.orderhub.core.exceptions;
 
-public class EstoqueNaoEncontradoException extends RuntimeException {
-
-    public EstoqueNaoEncontradoException(String sku) {
-        super("Estoque não encontrado para o SKU: " + sku);
+public class EstoqueNaoEncontradoException extends OrderhubException {
+    public EstoqueNaoEncontradoException(String message) {
+        super(message);
     }
 }

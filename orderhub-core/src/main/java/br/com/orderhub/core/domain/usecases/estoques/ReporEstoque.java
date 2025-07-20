@@ -14,7 +14,9 @@ public class ReporEstoque {
 
     public void executar(String sku, int quantidade) {
         Estoque estoque = estoqueGateway.buscarPorSku(sku)
-            .orElseThrow(() -> new EstoqueNaoEncontradoException(sku));
+            .orElseThrow(() -> new EstoqueNaoEncontradoException(
+                "Estoque não encontrado para o SKU: " + sku
+            ));
 
         estoque.reporEstoque(quantidade);
         estoqueGateway.salvar(estoque);
