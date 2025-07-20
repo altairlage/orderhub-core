@@ -12,7 +12,7 @@ import java.util.Map;
 public class Pedido {
     private Long idPedido;
     private Cliente cliente;
-    private Long idPagamento; // Trocar para private Pagamento pagamento; quando houver Pagamento.java
+    private Long idPagamento; // Trocar para "private Pagamento pagamento;" quando houver Pagamento.java
     private List<Map<Integer, Produto>> listaQtdProdutos;
     private StatusPedido status = null;
 

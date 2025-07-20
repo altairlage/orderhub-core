@@ -5,7 +5,6 @@ import br.com.orderhub.core.domain.entities.Produto;
 import java.util.List;
 
 public interface IProdutoGateway {
-    // Usar Optional para evitar retornos nulos
     Produto buscarPorId(Long id);
     Produto buscarPorNome(String nome);
     Produto criar(Produto produto);
