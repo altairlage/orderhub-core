@@ -68,7 +68,7 @@ public class PedidoControllerTest {
         clienteDTO = new ClienteDTO(
                 1L,
                 "Adamastor",
-                "123.456.789.10",
+                "123.456.789-09",
                 "25/01/1900",
                 "R. Teste",
                 "(11) 91234-5678",
@@ -79,7 +79,7 @@ public class PedidoControllerTest {
         clienteCriado = new Cliente(
                 1L,
                 "Adamastor",
-                "123.456.789.10",
+                "123.456.789-09",
                 "25/01/1900",
                 "R. Teste",
                 "(11) 91234-5678",
@@ -95,7 +95,7 @@ public class PedidoControllerTest {
 
     @Test
     public void deveCriarPedidoComSucesso(){
-        when(clienteGateway.buscarPorCpf("123.456.789.10")).thenReturn(clienteCriado);
+        when(clienteGateway.buscarPorCpf("123.456.789-09")).thenReturn(clienteCriado);
         when(produtoGateway.buscarPorNome("Arroz")).thenReturn(produtoCriado1);
         when(produtoGateway.buscarPorNome("Feijão")).thenReturn(produtoCriado2);
 
