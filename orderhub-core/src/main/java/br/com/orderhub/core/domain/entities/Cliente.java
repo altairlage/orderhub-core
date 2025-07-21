@@ -68,13 +68,11 @@ public class Cliente {
     }
 
     public void setCpf(String cpf) {
-        if(cpf == null || cpf.trim().isEmpty()) {
+        if(cpf == null || cpf.trim().isEmpty() || !InputStringValidator.isValidCpf(cpf)) {
             throw new IllegalArgumentException("CPF vazio ou invalido");
         }
 
-        if(InputStringValidator.isValidCpf(cpf)) {
-            this.cpf = cpf;
-        }
+        this.cpf = cpf;
     }
 
     public void setEndereco(String endereco) {

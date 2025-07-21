@@ -66,7 +66,7 @@ public class CriarPedidoTest {
         clienteDTO = new ClienteDTO(
                 1L,
                 "Adamastor",
-                "123.456.789.10",
+                "123.456.789-10",
                 "25/01/1900",
                 "R. Teste",
                 "(11) 91234-5678",
@@ -77,7 +77,7 @@ public class CriarPedidoTest {
         clienteCriado = new Cliente(
                 1L,
                 "Adamastor",
-                "123.456.789.10",
+                "123.456.789-10",
                 "25/01/1900",
                 "R. Teste",
                 "(11) 91234-5678",

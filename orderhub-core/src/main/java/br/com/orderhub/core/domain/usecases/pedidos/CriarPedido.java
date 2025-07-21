@@ -30,7 +30,7 @@ public class CriarPedido {
     }
 
     public Pedido run(CriarPedidoDTO pedidoDTO) {
-        final Cliente cliente = clienteGateway.buscarPorCpf(pedidoDTO.clienteDTO().email());
+        final Cliente cliente = clienteGateway.buscarPorCpf(pedidoDTO.clienteDTO().cpf());
         if (cliente == null) {
             throw new ClienteNaoEncontradoException("Cliente com CPF: " + pedidoDTO.clienteDTO().cpf() + " não encontrado");
         }
