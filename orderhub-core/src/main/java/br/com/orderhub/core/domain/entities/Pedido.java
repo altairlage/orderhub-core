@@ -13,10 +13,10 @@ public class Pedido {
     private Long idPedido;
     private Cliente cliente;
     private Long idPagamento; // Trocar para "private Pagamento pagamento;" quando houver Pagamento.java
-    private List<Map<Integer, Produto>> listaQtdProdutos;
+    private List<Map<String, Object>> listaQtdProdutos;
     private StatusPedido status = null;
 
-    public Pedido(Long idPedido, Cliente cliente, Long idPagamento, List<Map<Integer, Produto>> listaQtdProdutos, StatusPedido status) {
+    public Pedido(Long idPedido, Cliente cliente, Long idPagamento, List<Map<String, Object>> listaQtdProdutos, StatusPedido status) {
         setIdPedido(idPedido);
         setCliente(cliente);
         setIdPagamento(idPagamento);
@@ -24,9 +24,8 @@ public class Pedido {
         setStatus(status);
     }
 
-    public Pedido(Cliente cliente, Long idPagamento, List<Map<Integer, Produto>> listaQtdProdutos, StatusPedido status) {
+    public Pedido(Cliente cliente, List<Map<String, Object>> listaQtdProdutos, StatusPedido status) {
         setCliente(cliente);
-        setIdPagamento(idPagamento);
         setListaQtdProdutos(listaQtdProdutos);
         setStatus(status);
     }
@@ -52,7 +51,7 @@ public class Pedido {
         this.idPagamento = idPagamento;
     }
 
-    public void setListaQtdProdutos(List<Map<Integer, Produto>> listaQtdProdutos) {
+    public void setListaQtdProdutos(List<Map<String, Object>> listaQtdProdutos) {
         if (listaQtdProdutos == null || listaQtdProdutos.isEmpty())
             throw new IllegalArgumentException("Lista de produtos do pedido está vazia ou é inválida");
         this.listaQtdProdutos = listaQtdProdutos;
@@ -67,14 +66,21 @@ public class Pedido {
     }
 
     public Double calcularValorTotal() {
-        Double valorTotal = 0.0;
-        for(Map<Integer, Produto> produtoEQtdNoPedido: this.listaQtdProdutos){
-            for(Map.Entry<Integer, Produto> entry : produtoEQtdNoPedido.entrySet()){
-                int quantidade = entry.getKey();
-                Produto produto = entry.getValue();
+        double valorTotal = 0.0;
+        for(Map<String, Object> produtoEQtdNoPedido: this.listaQtdProdutos){
+            Integer quantidade = null;
+            Produto produto = null;
 
-                valorTotal += quantidade * produto.getPreco();
+            for(Map.Entry<String, Object> entry : produtoEQtdNoPedido.entrySet()){
+                if (entry.getKey().equals("quantidade")) {
+                    quantidade = Integer.parseInt(entry.getValue().toString());
+                }
+                if (entry.getKey().equals("produto")) {
+                    produto = (Produto) entry.getValue();
+                }
             }
+
+            valorTotal += quantidade * produto.getPreco();
         }
         return valorTotal;
     }
