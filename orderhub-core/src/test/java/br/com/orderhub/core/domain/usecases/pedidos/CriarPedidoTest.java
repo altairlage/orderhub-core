@@ -34,10 +34,10 @@ public class CriarPedidoTest {
     private CriarProdutoDTO produtoDTO2;
     private Produto produtoCriado1;
     private Produto produtoCriado2;
-    private Map<Integer, CriarProdutoDTO> mapCriarProduto1 = new HashMap<>();
-    private Map<Integer, CriarProdutoDTO> mapCriarProduto2 = new HashMap<>();
-    private Map<Integer, Produto> mapProduto1 = new HashMap<>();
-    private Map<Integer, Produto> mapProduto2 = new HashMap<>();
+    private Map<String, Object> mapCriarProduto1 = new HashMap<>();
+    private Map<String, Object> mapCriarProduto2 = new HashMap<>();
+    private Map<String, Object> mapProduto1 = new HashMap<>();
+    private Map<String, Object> mapProduto2 = new HashMap<>();
     private ClienteDTO clienteDTO;
     private Cliente clienteCriado;
     private Pedido pedidoCriado1;
@@ -57,11 +57,11 @@ public class CriarPedidoTest {
         produtoCriado1 = new Produto("Arroz", "Branco", 20.0);
         produtoCriado2 = new Produto("Feijão", "Preto", 20.0);
 
-        mapCriarProduto1.put(2, produtoDTO1);
-        mapCriarProduto2.put(3, produtoDTO2);
+        mapCriarProduto1.put("quantidade", 2);
+        mapCriarProduto1.put("idProduto", 1L);
 
-        mapProduto1.put(2, produtoCriado1);
-        mapProduto2.put(3, produtoCriado2);
+        mapCriarProduto2.put("quantidade", 1);
+        mapCriarProduto2.put("idProduto", 2L);
 
         clienteDTO = new ClienteDTO(
                 1L,
@@ -85,15 +85,15 @@ public class CriarPedidoTest {
                 "infoPgto"
         );
 
-        criarPedidoDTO = new CriarPedidoDTO(clienteDTO, 1L, Arrays.asList(mapCriarProduto1, mapCriarProduto2), StatusPedido.ABERTO);
+        criarPedidoDTO = new CriarPedidoDTO(1L, Arrays.asList(mapCriarProduto1, mapCriarProduto2), StatusPedido.ABERTO);
 
         pedidoCriado1 = new Pedido(1L, clienteCriado, 1L, Arrays.asList(mapProduto1, mapProduto2), StatusPedido.ABERTO);
     }
 
     @Test
     public void deveCriarPedidoComSucesso(){
-        when(clienteGateway.buscarPorCpf(any(String.class))).thenReturn(clienteCriado);
-        when(produtoGateway.buscarPorNome(any(String.class))).thenReturn(produtoCriado1);
+        when(clienteGateway.buscarPorId(any(Long.class))).thenReturn(clienteCriado);
+        when(produtoGateway.buscarPorId(any(Long.class))).thenReturn(produtoCriado1);
         when(pedidoGateway.criar(any(Pedido.class))).thenReturn(pedidoCriado1);
 
         Pedido resultado = criarPedido.run(criarPedidoDTO);

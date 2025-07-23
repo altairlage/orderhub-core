@@ -11,6 +11,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -36,8 +37,12 @@ public class BuscarPedidoPorIdClienteTest {
     public void deveBuscarPedidosPorIdClienteComSucesso(){
         Produto produtoCriado1 = new Produto("Arroz", "Branco", 20.0);
         Produto produtoCriado2 = new Produto("Feijão", "Preto", 20.0);
-        Map<Integer, Produto> mapProduto1 = Map.of(2, produtoCriado1);
-        Map<Integer, Produto> mapProduto2 = Map.of(3, produtoCriado2);
+        Map<String, Object>  mapProduto1 = new HashMap<>();
+        Map<String, Object> mapProduto2 = new HashMap<>();
+        mapProduto1.put("quantidade", 1);
+        mapProduto1.put("produto", produtoCriado1);
+        mapProduto2.put("quantidade", 2);
+        mapProduto2.put("produto", produtoCriado2);
 
         Cliente cliente = new Cliente(1L,
                 "Jorge",
