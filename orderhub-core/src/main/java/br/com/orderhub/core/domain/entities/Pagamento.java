@@ -20,7 +20,7 @@ public class Pagamento {
     }
 
     public void setStatus(StatusPagamento status) {
-        if (this.status == StatusPagamento.ABERTO && !status.toString().contains("FECHADO")) {
+        if (this.status == StatusPagamento.EM_ABERTO && !status.toString().contains("FECHADO")) {
             throw new IllegalArgumentException("Ordem de Pagamento com status 'ABERTO' só pode ser fechada");
         }
 
