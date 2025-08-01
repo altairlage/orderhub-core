@@ -38,6 +38,7 @@ public class PagamentoControllerTest {
         Long id = 2L;
         StatusPagamento status = StatusPagamento.FECHADO_COM_SUCESSO;
         Pagamento pagamentoMock = new Pagamento(id, status);
+        when(gateway.buscarOrderPagamentoPorId(id)).thenReturn(pagamentoMock);
         when(gateway.fecharOrdemPagamento(id, status)).thenReturn(pagamentoMock);
 
         PagamentoDTO dto = controller.fecharOrdemPagamento(id, status);
