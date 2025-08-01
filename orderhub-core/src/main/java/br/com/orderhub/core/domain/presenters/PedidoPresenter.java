@@ -16,7 +16,7 @@ public class PedidoPresenter {
         return new PedidoDTO(
                 pedido.getIdPedido(),
                 ClientePresenter.ToDTO(pedido.getCliente()),
-                pedido.getIdPagamento(),
+                PagamentoPresenter.ToDTO(pedido.getPagamento()),
                 ToProductListDTO(pedido.getListaQtdProdutos()),
                 pedido.getStatus());
     }
@@ -25,7 +25,7 @@ public class PedidoPresenter {
         return new Pedido(
                 pedidoDTO.idPedido(),
                 ClientePresenter.ToDomain(pedidoDTO.cliente()),
-                pedidoDTO.idPagamento(),
+                PagamentoPresenter.ToDomain(pedidoDTO.pagamento()),
                 ToProductListDomain(pedidoDTO.listaQtdProdutos()),
                 pedidoDTO.status());
     }

@@ -1,8 +1,10 @@
 package br.com.orderhub.core.domain.usecases.pedidos;
 
 import br.com.orderhub.core.domain.entities.Cliente;
+import br.com.orderhub.core.domain.entities.Pagamento;
 import br.com.orderhub.core.domain.entities.Pedido;
 import br.com.orderhub.core.domain.entities.Produto;
+import br.com.orderhub.core.domain.enums.StatusPagamento;
 import br.com.orderhub.core.domain.enums.StatusPedido;
 import br.com.orderhub.core.exceptions.PedidoNaoEncontradoException;
 import br.com.orderhub.core.interfaces.IPedidoGateway;
@@ -28,6 +30,7 @@ public class BuscarPedidoPorIdTest {
 
     @Test
     public void deveBuscarPorIdComSucesso(){
+        Pagamento pagamentoCriado = new Pagamento(1L, StatusPagamento.EM_ABERTO);
         Produto produtoCriado1 = new Produto("Arroz", "Branco", 20.0);
         Produto produtoCriado2 = new Produto("Feijão", "Preto", 20.0);
         Map<String, Object>  mapProduto1 = new HashMap<>();
@@ -46,7 +49,7 @@ public class BuscarPedidoPorIdTest {
                 "email@email.com",
                 "");
 
-        Pedido pedido = new Pedido(1L, cliente, 1L, Arrays.asList(mapProduto1, mapProduto2), StatusPedido.ABERTO);
+        Pedido pedido = new Pedido(1L, cliente, pagamentoCriado, Arrays.asList(mapProduto1, mapProduto2), StatusPedido.ABERTO);
 
         when(pedidoGateway.buscarPorId(1L)).thenReturn(pedido);
 

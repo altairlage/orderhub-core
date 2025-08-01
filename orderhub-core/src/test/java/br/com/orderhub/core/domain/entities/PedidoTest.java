@@ -1,5 +1,6 @@
 package br.com.orderhub.core.domain.entities;
 
+import br.com.orderhub.core.domain.enums.StatusPagamento;
 import br.com.orderhub.core.domain.enums.StatusPedido;
 import org.junit.jupiter.api.Test;
 
@@ -13,6 +14,7 @@ public class PedidoTest {
 
     @Test
     public void deveCriarPedidoComSucesso(){
+        Pagamento pagamentoCriado = new Pagamento(1L, StatusPagamento.EM_ABERTO);
         Produto produtoCriado1 = new Produto("Arroz", "Branco", 20.0);
         Produto produtoCriado2 = new Produto("Feijão", "Preto", 20.0);
         Map<String, Object>  mapProduto1 = new HashMap<>();
@@ -32,12 +34,12 @@ public class PedidoTest {
                 ""
         );
 
-        Pedido resultado = new Pedido(1L, cliente, 1L, Arrays.asList(mapProduto1, mapProduto2), StatusPedido.ABERTO);
+        Pedido resultado = new Pedido(1L, cliente, pagamentoCriado, Arrays.asList(mapProduto1, mapProduto2), StatusPedido.ABERTO);
 
         assertEquals(1L, resultado.getIdPedido());
         assertEquals(StatusPedido.ABERTO, resultado.getStatus());
         assertEquals(1L, resultado.getCliente().getId());
-        assertEquals(1L, resultado.getIdPagamento());
+        assertEquals(pagamentoCriado, resultado.getPagamento());
         assertEquals(100.0, resultado.calcularValorTotal());
         assertFalse(resultado.getListaQtdProdutos().isEmpty());
 
@@ -45,6 +47,7 @@ public class PedidoTest {
 
     @Test
     public void deveCompararPorEqualsComSucesso(){
+        Pagamento pagamentoCriado = new Pagamento(1L, StatusPagamento.EM_ABERTO);
         Produto produtoCriado1 = new Produto("Arroz", "Branco", 20.0);
         Produto produtoCriado2 = new Produto("Feijão", "Preto", 20.0);
         Map<String, Object>  mapProduto1 = new HashMap<>();
@@ -63,14 +66,15 @@ public class PedidoTest {
                 "email@email.com",
                 "");
 
-        Pedido pedido1 = new Pedido(1L, cliente, 1L, Arrays.asList(mapProduto1, mapProduto2), StatusPedido.ABERTO);
-        Pedido pedido2 = new Pedido(1L, cliente, 1L, Arrays.asList(mapProduto1, mapProduto2), StatusPedido.ABERTO);
+        Pedido pedido1 = new Pedido(1L, cliente, pagamentoCriado, Arrays.asList(mapProduto1, mapProduto2), StatusPedido.ABERTO);
+        Pedido pedido2 = new Pedido(1L, cliente, pagamentoCriado, Arrays.asList(mapProduto1, mapProduto2), StatusPedido.ABERTO);
 
         assertEquals(pedido1, pedido2);
     }
 
     @Test
     public void deveGerarHashCodeConsistente(){
+        Pagamento pagamentoCriado = new Pagamento(1L, StatusPagamento.EM_ABERTO);
         Produto produtoCriado1 = new Produto("Arroz", "Branco", 20.0);
         Produto produtoCriado2 = new Produto("Feijão", "Preto", 20.0);
         Map<String, Object>  mapProduto1 = new HashMap<>();
@@ -89,8 +93,8 @@ public class PedidoTest {
                 "email@email.com",
                 "");
 
-        Pedido pedido1 = new Pedido(1L, cliente, 1L, Arrays.asList(mapProduto1, mapProduto2), StatusPedido.ABERTO);
-        Pedido pedido2 = new Pedido(1L, cliente, 1L, Arrays.asList(mapProduto1, mapProduto2), StatusPedido.ABERTO);
+        Pedido pedido1 = new Pedido(1L, cliente, pagamentoCriado, Arrays.asList(mapProduto1, mapProduto2), StatusPedido.ABERTO);
+        Pedido pedido2 = new Pedido(1L, cliente, pagamentoCriado, Arrays.asList(mapProduto1, mapProduto2), StatusPedido.ABERTO);
 
         assertEquals(pedido1.hashCode(), pedido2.hashCode());
     }

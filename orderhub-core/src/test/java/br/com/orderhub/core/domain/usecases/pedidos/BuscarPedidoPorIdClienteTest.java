@@ -1,8 +1,10 @@
 package br.com.orderhub.core.domain.usecases.pedidos;
 
 import br.com.orderhub.core.domain.entities.Cliente;
+import br.com.orderhub.core.domain.entities.Pagamento;
 import br.com.orderhub.core.domain.entities.Pedido;
 import br.com.orderhub.core.domain.entities.Produto;
+import br.com.orderhub.core.domain.enums.StatusPagamento;
 import br.com.orderhub.core.domain.enums.StatusPedido;
 import br.com.orderhub.core.exceptions.ClienteNaoEncontradoException;
 import br.com.orderhub.core.interfaces.IClienteGateway;
@@ -35,6 +37,7 @@ public class BuscarPedidoPorIdClienteTest {
 
     @Test
     public void deveBuscarPedidosPorIdClienteComSucesso(){
+        Pagamento pagamentoCriado = new Pagamento(1L, StatusPagamento.EM_ABERTO);
         Produto produtoCriado1 = new Produto("Arroz", "Branco", 20.0);
         Produto produtoCriado2 = new Produto("Feijão", "Preto", 20.0);
         Map<String, Object>  mapProduto1 = new HashMap<>();
@@ -54,8 +57,8 @@ public class BuscarPedidoPorIdClienteTest {
                 ""
         );
 
-        Pedido pedido1 = new Pedido(1L, cliente, 1L, Arrays.asList(mapProduto1, mapProduto2), StatusPedido.ABERTO);
-        Pedido pedido2 = new Pedido(2L, cliente, 2L, Arrays.asList(mapProduto1, mapProduto2), StatusPedido.ABERTO);
+        Pedido pedido1 = new Pedido(1L, cliente, pagamentoCriado, Arrays.asList(mapProduto1, mapProduto2), StatusPedido.ABERTO);
+        Pedido pedido2 = new Pedido(2L, cliente, pagamentoCriado, Arrays.asList(mapProduto1, mapProduto2), StatusPedido.ABERTO);
 
         when(clienteGateway.buscarPorId(any(Long.class))).thenReturn(cliente);
         when(pedidoGateway.buscarPorIdCliente(1L)).thenReturn(Arrays.asList(pedido1, pedido2));

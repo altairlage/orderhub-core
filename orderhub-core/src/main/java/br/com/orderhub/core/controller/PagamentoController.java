@@ -5,6 +5,7 @@ import br.com.orderhub.core.domain.presenters.PagamentoPresenter;
 import br.com.orderhub.core.domain.usecases.pagamentos.BuscarPagamentoPorId;
 import br.com.orderhub.core.domain.usecases.pagamentos.FecharOrdemPagamento;
 import br.com.orderhub.core.domain.usecases.pagamentos.GerarOrdemPagamento;
+import br.com.orderhub.core.dto.clientes.ClienteDTO;
 import br.com.orderhub.core.dto.pagamentos.PagamentoDTO;
 import br.com.orderhub.core.interfaces.IPagamentoGateway;
 
@@ -29,7 +30,7 @@ public class PagamentoController {
         return PagamentoPresenter.ToDTO(fecharOrdemPagamento.run(idOrdemPagamento, status));
     }
 
-    public PagamentoDTO gerarOrdemPagamento(){
-        return PagamentoPresenter.ToDTO(gerarOrdemPagamento.run());
+    public PagamentoDTO gerarOrdemPagamento(ClienteDTO clienteDTO){
+        return PagamentoPresenter.ToDTO(gerarOrdemPagamento.run(clienteDTO));
     }
 }

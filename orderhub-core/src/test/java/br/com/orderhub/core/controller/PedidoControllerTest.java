@@ -1,9 +1,12 @@
 package br.com.orderhub.core.controller;
 
 import br.com.orderhub.core.domain.entities.Cliente;
+import br.com.orderhub.core.domain.entities.Pagamento;
 import br.com.orderhub.core.domain.entities.Pedido;
 import br.com.orderhub.core.domain.entities.Produto;
+import br.com.orderhub.core.domain.enums.StatusPagamento;
 import br.com.orderhub.core.domain.enums.StatusPedido;
+import br.com.orderhub.core.domain.presenters.PagamentoPresenter;
 import br.com.orderhub.core.domain.presenters.PedidoPresenter;
 import br.com.orderhub.core.dto.clientes.ClienteDTO;
 import br.com.orderhub.core.dto.pedidos.CriarPedidoDTO;
@@ -45,6 +48,8 @@ public class PedidoControllerTest {
     private Pedido pedidoCriado1;
     private Pedido pedidoCriado2;
     private CriarPedidoDTO criarPedidoDTO;
+    private Pagamento pagamentoCriado1;
+    private Pagamento pagamentoCriado2;
 
     @BeforeEach
     public void setUp() {
@@ -91,10 +96,13 @@ public class PedidoControllerTest {
                 "infoPgto"
         );
 
+        pagamentoCriado1 = new Pagamento(1L, StatusPagamento.EM_ABERTO);
+        pagamentoCriado2 = new Pagamento(2L, StatusPagamento.EM_ABERTO);
+
         criarPedidoDTO = new CriarPedidoDTO(1L, Arrays.asList(mapCriarProduto1, mapCriarProduto2), StatusPedido.ABERTO);
 
-        pedidoCriado1 = new Pedido(1L, clienteCriado, 1L, Arrays.asList(mapProduto1, mapProduto2), StatusPedido.ABERTO);
-        pedidoCriado2 = new Pedido(2L, clienteCriado, 2L, Arrays.asList(mapProduto2, mapProduto1), StatusPedido.ABERTO);
+        pedidoCriado1 = new Pedido(1L, clienteCriado, pagamentoCriado1, Arrays.asList(mapProduto1, mapProduto2), StatusPedido.ABERTO);
+        pedidoCriado2 = new Pedido(2L, clienteCriado, pagamentoCriado2, Arrays.asList(mapProduto2, mapProduto1), StatusPedido.ABERTO);
     }
 
     @Test
@@ -137,7 +145,7 @@ public class PedidoControllerTest {
 
     @Test
     public void deveEditarPedidoComSucesso(){
-        Pedido pedidoAtualizado = new Pedido(1L, clienteCriado, 3L, Arrays.asList(mapProduto2, mapProduto1), StatusPedido.FECHADO_PELO_CLIENTE);
+        Pedido pedidoAtualizado = new Pedido(1L, clienteCriado, pagamentoCriado1, Arrays.asList(mapProduto2, mapProduto1), StatusPedido.FECHADO_PELO_CLIENTE);
 
         when(pedidoGateway.buscarPorId(any(Long.class))).thenReturn(pedidoCriado1);
         when(pedidoGateway.editar(any(Pedido.class), any(Pedido.class))).thenReturn(pedidoAtualizado);
@@ -146,13 +154,13 @@ public class PedidoControllerTest {
 
         assertNotNull(resultado);
         assertEquals(StatusPedido.FECHADO_PELO_CLIENTE, resultado.status());
-        assertEquals(3L, resultado.idPagamento());
+        assertEquals(PagamentoPresenter.ToDTO(pagamentoCriado1), resultado.pagamento());
         verify(pedidoGateway).editar(pedidoCriado1, pedidoAtualizado);
     }
 
     @Test
     public void deveEditarPedidoStatusComSucesso(){
-        Pedido pedidoAtualizado = new Pedido(1L, clienteCriado, 1L, Arrays.asList(mapProduto1, mapProduto2), StatusPedido.FECHADO_SUCESSO);
+        Pedido pedidoAtualizado = new Pedido(1L, clienteCriado, pagamentoCriado2, Arrays.asList(mapProduto1, mapProduto2), StatusPedido.FECHADO_SUCESSO);
 
         when(pedidoGateway.buscarPorId(any(Long.class))).thenReturn(pedidoCriado1);
         when(pedidoGateway.editarStatus(any(Long.class), any(StatusPedido.class))).thenReturn(pedidoAtualizado);
