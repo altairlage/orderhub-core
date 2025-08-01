@@ -41,9 +41,7 @@ public class FecharOrdemPagamentoTest {
         public void deveLancarExcecaoSeStatusForNulo() {
             Long id = 1L;
 
-            Exception ex = assertThrows(IllegalArgumentException.class, () -> {
-                fecharOrdemPagamento.run(id, null);
-            });
+            Exception ex = assertThrows(IllegalArgumentException.class, () -> fecharOrdemPagamento.run(id, null));
 
             assertEquals("Status nulo ou invalido", ex.getMessage());
         }
@@ -52,9 +50,7 @@ public class FecharOrdemPagamentoTest {
         public void deveLancarExcecaoSeStatusNaoContemFechado() {
             Long id = 1L;
 
-            Exception ex = assertThrows(IllegalArgumentException.class, () -> {
-                fecharOrdemPagamento.run(id, StatusPagamento.EM_ABERTO);
-            });
+            Exception ex = assertThrows(IllegalArgumentException.class, () -> fecharOrdemPagamento.run(id, StatusPagamento.EM_ABERTO));
 
             assertEquals("Status nulo ou invalido", ex.getMessage());
         }
@@ -66,9 +62,7 @@ public class FecharOrdemPagamentoTest {
 
             when(gateway.buscarOrderPagamentoPorId(id)).thenReturn(null);
 
-            Exception ex = assertThrows(OrdemPagamentoNaoEncontradaException.class, () -> {
-                fecharOrdemPagamento.run(id, status);
-            });
+            Exception ex = assertThrows(OrdemPagamentoNaoEncontradaException.class, () -> fecharOrdemPagamento.run(id, status));
 
             assertEquals("Ordem de pagamento com id 2 não encontrada", ex.getMessage());
             verify(gateway).buscarOrderPagamentoPorId(id);

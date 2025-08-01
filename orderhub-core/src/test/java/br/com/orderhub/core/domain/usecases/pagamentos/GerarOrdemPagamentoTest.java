@@ -58,9 +58,7 @@ public class GerarOrdemPagamentoTest {
 
         when(gateway.gerarOrdemPagamento(clienteDTO)).thenThrow(new RuntimeException("Falha interna"));
 
-        Exception ex = assertThrows(RuntimeException.class, () -> {
-            gerarOrdemPagamento.run(clienteDTO);
-        });
+        Exception ex = assertThrows(RuntimeException.class, () -> gerarOrdemPagamento.run(clienteDTO));
 
         assertTrue(ex.getMessage().contains("Erro ao gerar ordem de pagamento"));
         assertNotNull(ex.getCause());

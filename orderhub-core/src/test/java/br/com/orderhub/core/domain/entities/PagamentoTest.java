@@ -35,9 +35,7 @@ public class PagamentoTest {
         public void deveLancarExcecaoAoAlterarStatusDeAbertoParaNaoFechado() {
             Pagamento pagamento = new Pagamento(1L, StatusPagamento.EM_ABERTO);
 
-            Exception ex = assertThrows(IllegalArgumentException.class, () -> {
-                pagamento.setStatus(StatusPagamento.EM_ABERTO);
-            });
+            Exception ex = assertThrows(IllegalArgumentException.class, () -> pagamento.setStatus(StatusPagamento.EM_ABERTO));
 
             assertEquals("Ordem de Pagamento com status 'ABERTO' só pode ser fechada", ex.getMessage());
         }

@@ -38,9 +38,7 @@ public class BuscarPagamentoPorIdTest {
         Long id = 2L;
         when(gateway.buscarOrderPagamentoPorId(id)).thenReturn(null);
 
-        Exception ex = assertThrows(OrdemPagamentoNaoEncontradaException.class, () -> {
-            buscarPagamentoPorId.run(id);
-        });
+        Exception ex = assertThrows(OrdemPagamentoNaoEncontradaException.class, () -> buscarPagamentoPorId.run(id));
 
         assertEquals("Ordem de pagamento com id 2 não encontrada", ex.getMessage());
         verify(gateway).buscarOrderPagamentoPorId(id);

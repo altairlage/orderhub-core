@@ -11,6 +11,8 @@ public class Produto {
     private String descricao;
     private Double preco;
 
+    public Produto() {}
+
     public Produto(Long id, String nome, String descricao, Double preco) {
         setId(id);
         setNome(nome);

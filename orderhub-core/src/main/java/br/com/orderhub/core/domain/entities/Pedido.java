@@ -68,8 +68,8 @@ public class Pedido {
     public Double calcularValorTotal() {
         double valorTotal = 0.0;
         for(Map<String, Object> produtoEQtdNoPedido: this.listaQtdProdutos){
-            Integer quantidade = null;
-            Produto produto = null;
+            int quantidade = 0;
+            Produto produto = new Produto();
 
             for(Map.Entry<String, Object> entry : produtoEQtdNoPedido.entrySet()){
                 if (entry.getKey().equals("quantidade")) {
