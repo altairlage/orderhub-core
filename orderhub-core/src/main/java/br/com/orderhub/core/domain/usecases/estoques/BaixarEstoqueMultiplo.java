@@ -24,31 +24,28 @@ public class BaixarEstoqueMultiplo {
             return;
         }
 
-        // Pega todos os SKUs para uma busca otimizada
-        List<String> skus = itensParaBaixa.stream().map(ItemEstoqueDTO::sku).collect(Collectors.toList());
+        List<Long> ids = itensParaBaixa.stream().map(ItemEstoqueDTO::id).collect(Collectors.toList());
 
-        // Busca todos os estoques de uma só vez (usando o método sugerido no gateway)
-        Map<String, Estoque> estoquesEncontrados = estoqueGateway.buscarPorSkus(skus)
+        Map<Long, Estoque> estoquesEncontrados = estoqueGateway.buscarPorIds(ids)
                 .stream()
-                .collect(Collectors.toMap(Estoque::getSku, Function.identity()));
+                .collect(Collectors.toMap(Estoque::getId, Function.identity()));
 
-        // ETAPA 1: VERIFICAR TUDO ANTES DE MODIFICAR
         for (ItemEstoqueDTO item : itensParaBaixa) {
-            Estoque estoque = estoquesEncontrados.get(item.sku());
+            Estoque estoque = estoquesEncontrados.get(item.id());
             if (estoque == null) {
-                throw new EstoqueNaoEncontradoException("Estoque não encontrado para o SKU (produto ID): " + item.sku());
+                throw new EstoqueNaoEncontradoException("Estoque não encontrado para o ID (produto ID): " + item.id());
             }
             if (estoque.getQuantidadeDisponivel() < item.quantidade()) {
+
                 throw new EstoqueInsuficienteException(
-                    String.format("Estoque insuficiente para SKU %s. Solicitado: %d, Disponível: %d",
-                        item.sku(), item.quantidade(), estoque.getQuantidadeDisponivel())
+                    String.format("Estoque insuficiente para ID %d. Solicitado: %d, Disponível: %d",
+                        item.id(), item.quantidade(), estoque.getQuantidadeDisponivel())
                 );
             }
         }
 
-        // ETAPA 2: EXECUTAR AS BAIXAS (somente se todas as verificações passaram)
         for (ItemEstoqueDTO item : itensParaBaixa) {
-            Estoque estoque = estoquesEncontrados.get(item.sku());
+            Estoque estoque = estoquesEncontrados.get(item.id());
             estoque.baixarEstoque(item.quantidade());
             estoqueGateway.salvar(estoque);
         }

@@ -13,7 +13,8 @@ class EstoqueTest {
 
     @BeforeEach
     void setUp() {
-        estoque = new Estoque("SKU123", 10, LocalDateTime.now(), LocalDateTime.now());
+        // CORREÇÃO: Usa um Long (1L) em vez de uma String para o ID
+        estoque = new Estoque(1L, 10, LocalDateTime.now(), LocalDateTime.now());
     }
 
     @Test

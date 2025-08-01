@@ -12,10 +12,10 @@ public class ReporEstoque {
         this.estoqueGateway = estoqueGateway;
     }
 
-    public void executar(String sku, int quantidade) {
-        Estoque estoque = estoqueGateway.buscarPorSku(sku)
+    public void executar(Long id, int quantidade) {
+        Estoque estoque = estoqueGateway.buscarPorId(id)
             .orElseThrow(() -> new EstoqueNaoEncontradoException(
-                "Estoque não encontrado para o SKU: " + sku
+                "Estoque não encontrado para o ID: " + id
             ));
 
         estoque.reporEstoque(quantidade);
