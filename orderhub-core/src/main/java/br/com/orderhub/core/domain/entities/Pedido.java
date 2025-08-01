@@ -12,14 +12,14 @@ import java.util.Map;
 public class Pedido {
     private Long idPedido;
     private Cliente cliente;
-    private Long idPagamento; // Trocar para "private Pagamento pagamento;" quando houver Pagamento.java
+    private Pagamento pagamento;
     private List<Map<String, Object>> listaQtdProdutos;
     private StatusPedido status = null;
 
-    public Pedido(Long idPedido, Cliente cliente, Long idPagamento, List<Map<String, Object>> listaQtdProdutos, StatusPedido status) {
+    public Pedido(Long idPedido, Cliente cliente, Pagamento pagamento, List<Map<String, Object>> listaQtdProdutos, StatusPedido status) {
         setIdPedido(idPedido);
         setCliente(cliente);
-        setIdPagamento(idPagamento);
+        setPagamento(pagamento);
         setListaQtdProdutos(listaQtdProdutos);
         setStatus(status);
     }
@@ -44,11 +44,11 @@ public class Pedido {
         this.cliente = cliente;
     }
 
-    public void setIdPagamento(Long idPagamento) {
-        if (idPagamento == null || idPagamento <= 0) {
+    public void setPagamento(Pagamento pagamento) {
+        if (pagamento == null || pagamento.getId() == null || pagamento.getId() <= 0) {
             throw new IllegalArgumentException("ID do pagamento está vazio ou é inválido");
         }
-        this.idPagamento = idPagamento;
+        this.pagamento = pagamento;
     }
 
     public void setListaQtdProdutos(List<Map<String, Object>> listaQtdProdutos) {
@@ -68,8 +68,8 @@ public class Pedido {
     public Double calcularValorTotal() {
         double valorTotal = 0.0;
         for(Map<String, Object> produtoEQtdNoPedido: this.listaQtdProdutos){
-            Integer quantidade = null;
-            Produto produto = null;
+            int quantidade = 0;
+            Produto produto = new Produto();
 
             for(Map.Entry<String, Object> entry : produtoEQtdNoPedido.entrySet()){
                 if (entry.getKey().equals("quantidade")) {
