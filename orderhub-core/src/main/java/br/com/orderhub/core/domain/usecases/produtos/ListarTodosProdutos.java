@@ -15,4 +15,5 @@ public class ListarTodosProdutos {
     public List<Produto> run(){
         return gateway.listarTodos();
     }
+
 }
