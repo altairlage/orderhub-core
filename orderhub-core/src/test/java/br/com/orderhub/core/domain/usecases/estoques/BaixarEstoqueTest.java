@@ -30,17 +30,13 @@ class BaixarEstoqueTest {
 
     @Test
     void deveBaixarEstoqueComSucesso() {
-        String sku = "SKU123";
+        Long id = 1L;
         int quantidadeSolicitada = 3;
-        Estoque estoque = new Estoque(
-                sku,
-                10,
-                LocalDateTime.now(),
-                LocalDateTime.now());
+        Estoque estoque = new Estoque(id, 10, LocalDateTime.now(), LocalDateTime.now());
 
-        when(estoqueGateway.buscarPorSku(sku)).thenReturn(Optional.of(estoque));
+        when(estoqueGateway.buscarPorId(id)).thenReturn(Optional.of(estoque));
 
-        baixarEstoque.executar(sku, quantidadeSolicitada);
+        baixarEstoque.executar(id, quantidadeSolicitada);
 
         assertEquals(7, estoque.getQuantidadeDisponivel());
         verify(estoqueGateway).salvar(estoque);
@@ -48,44 +44,39 @@ class BaixarEstoqueTest {
 
     @Test
     void deveLancarExcecaoQuandoEstoqueNaoEncontrado() {
-        String sku = "INEXISTENTE";
+        Long id = 999L;
 
-        when(estoqueGateway.buscarPorSku(sku)).thenReturn(Optional.empty());
+        when(estoqueGateway.buscarPorId(id)).thenReturn(Optional.empty());
 
         EstoqueNaoEncontradoException exception = assertThrows(
                 EstoqueNaoEncontradoException.class,
-                () -> baixarEstoque.executar(sku, 5));
+                () -> baixarEstoque.executar(id, 5));
 
         assertTrue(exception.getMessage().contains("Estoque não encontrado"));
     }
 
     @Test
     void deveLancarExcecaoQuandoEstoqueInsuficiente() {
-        String sku = "SKU123";
-        Estoque estoque = new Estoque(
-                sku,
-                2,
-                LocalDateTime.now(),
-                LocalDateTime.now());
+        Long id = 1L;
+        Estoque estoque = new Estoque(id, 2, LocalDateTime.now(), LocalDateTime.now());
 
-        when(estoqueGateway.buscarPorSku(sku)).thenReturn(Optional.of(estoque));
+        when(estoqueGateway.buscarPorId(id)).thenReturn(Optional.of(estoque));
 
         EstoqueInsuficienteException exception = assertThrows(
                 EstoqueInsuficienteException.class,
-                () -> baixarEstoque.executar(sku, 5));
+                () -> baixarEstoque.executar(id, 5));
 
         assertTrue(exception.getMessage().contains("Estoque insuficiente"));
     }
 
     @Test
     void deveLancarExcecaoQuandoQuantidadeMenorOuIgualAZero() {
-        String sku = "SKU123";
+        Long id = 1L;
 
         IllegalArgumentException exception = assertThrows(
                 IllegalArgumentException.class,
-                () -> baixarEstoque.executar(sku, 0));
+                () -> baixarEstoque.executar(id, 0));
 
         assertEquals("A quantidade solicitada deve ser maior que zero.", exception.getMessage());
     }
-
 }

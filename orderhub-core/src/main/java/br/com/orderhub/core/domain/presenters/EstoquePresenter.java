@@ -10,14 +10,14 @@ public class EstoquePresenter {
 
     public static EstoqueDTO toDTO(Estoque estoque) {
         return new EstoqueDTO(
-                estoque.getSku(),
+                estoque.getId(), // CORREÇÃO: de getSku() para getId()
                 estoque.getQuantidadeDisponivel()
         );
     }
 
     public static Estoque toDomain(EstoqueDTO dto) {
         return Estoque.builder()
-                .sku(dto.sku())
+                .id(dto.id()) // CORREÇÃO: de sku() para id()
                 .quantidadeDisponivel(dto.quantidadeDisponivel())
                 .build();
     }

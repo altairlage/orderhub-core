@@ -29,13 +29,13 @@ class ReporEstoqueTest {
 
     @Test
     void deveReporEstoqueComSucesso() {
-        String sku = "SKU123";
+        Long id = 1L;
         int quantidadeReposta = 5;
-        Estoque estoque = new Estoque(sku, 10, LocalDateTime.now(), LocalDateTime.now());
+        Estoque estoque = new Estoque(id, 10, LocalDateTime.now(), LocalDateTime.now());
 
-        when(estoqueGateway.buscarPorSku(sku)).thenReturn(Optional.of(estoque));
+        when(estoqueGateway.buscarPorId(id)).thenReturn(Optional.of(estoque));
 
-        reporEstoque.executar(sku, quantidadeReposta);
+        reporEstoque.executar(id, quantidadeReposta);
 
         assertEquals(15, estoque.getQuantidadeDisponivel());
         verify(estoqueGateway).salvar(estoque);
@@ -43,13 +43,13 @@ class ReporEstoqueTest {
 
     @Test
     void deveLancarExcecaoQuandoEstoqueNaoEncontrado() {
-        String sku = "INEXISTENTE";
+        Long id = 999L;
 
-        when(estoqueGateway.buscarPorSku(sku)).thenReturn(Optional.empty());
+        when(estoqueGateway.buscarPorId(id)).thenReturn(Optional.empty());
 
         EstoqueNaoEncontradoException exception = assertThrows(
                 EstoqueNaoEncontradoException.class,
-                () -> reporEstoque.executar(sku, 3)
+                () -> reporEstoque.executar(id, 3)
         );
 
         assertTrue(exception.getMessage().contains("Estoque não encontrado"));
@@ -57,14 +57,14 @@ class ReporEstoqueTest {
 
     @Test
     void deveLancarExcecaoQuandoQuantidadeMenorOuIgualAZero() {
-        String sku = "SKU123";
-        Estoque estoque = new Estoque(sku, 10, LocalDateTime.now(), LocalDateTime.now());
+        Long id = 1L;
+        Estoque estoque = new Estoque(id, 10, LocalDateTime.now(), LocalDateTime.now());
 
-        when(estoqueGateway.buscarPorSku(sku)).thenReturn(Optional.of(estoque));
+        when(estoqueGateway.buscarPorId(id)).thenReturn(Optional.of(estoque));
 
         IllegalArgumentException exception = assertThrows(
                 IllegalArgumentException.class,
-                () -> reporEstoque.executar(sku, 0)
+                () -> reporEstoque.executar(id, 0)
         );
 
         assertEquals("Quantidade para reposição deve ser maior que zero.", exception.getMessage());

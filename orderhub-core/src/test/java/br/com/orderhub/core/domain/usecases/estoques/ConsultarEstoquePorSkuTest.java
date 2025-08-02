@@ -14,37 +14,37 @@ import static org.mockito.Mockito.when;
 import br.com.orderhub.core.domain.entities.Estoque;
 import br.com.orderhub.core.interfaces.IEstoqueGateway;
 
-class ConsultarEstoquePorSkuTest {
+class ConsultarEstoquePorIdTest {
 
     private IEstoqueGateway estoqueGateway;
-    private ConsultarEstoquePorSku consultarEstoquePorSku;
+    private ConsultarEstoquePorId consultarEstoquePorId;
 
     @BeforeEach
     void setUp() {
         estoqueGateway = mock(IEstoqueGateway.class);
-        consultarEstoquePorSku = new ConsultarEstoquePorSku(estoqueGateway);
+        consultarEstoquePorId = new ConsultarEstoquePorId(estoqueGateway);
     }
 
     @Test
-    void deveRetornarEstoqueQuandoSkuExistir() {
-        String sku = "SKU123";
-        Estoque estoque = new Estoque(sku, 10, LocalDateTime.now(), LocalDateTime.now());
+    void deveRetornarEstoqueQuandoIdExistir() {
+        Long id = 1L;
+        Estoque estoque = new Estoque(id, 10, LocalDateTime.now(), LocalDateTime.now());
 
-        when(estoqueGateway.buscarPorSku(sku)).thenReturn(Optional.of(estoque));
+        when(estoqueGateway.buscarPorId(id)).thenReturn(Optional.of(estoque));
 
-        Optional<Estoque> resultado = consultarEstoquePorSku.run(sku);
+        Optional<Estoque> resultado = consultarEstoquePorId.run(id);
 
         assertTrue(resultado.isPresent());
         assertEquals(estoque, resultado.get());
     }
 
     @Test
-    void deveRetornarOptionalVazioQuandoSkuNaoExistir() {
-        String sku = "SKU_INEXISTENTE";
+    void deveRetornarOptionalVazioQuandoIdNaoExistir() {
+        Long id = 999L;
 
-        when(estoqueGateway.buscarPorSku(sku)).thenReturn(Optional.empty());
+        when(estoqueGateway.buscarPorId(id)).thenReturn(Optional.empty());
 
-        Optional<Estoque> resultado = consultarEstoquePorSku.run(sku);
+        Optional<Estoque> resultado = consultarEstoquePorId.run(id);
 
         assertFalse(resultado.isPresent());
     }

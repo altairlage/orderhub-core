@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class Estoque {
 
-    private String sku;
+    private Long id;
     private Integer quantidadeDisponivel;
 
     private LocalDateTime criadoEm;
