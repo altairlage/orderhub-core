@@ -24,28 +24,32 @@ public class BaixarEstoqueMultiplo {
             return;
         }
 
-        List<Long> ids = itensParaBaixa.stream().map(ItemEstoqueDTO::id).collect(Collectors.toList());
+        // Busca os IDs dos produtos a partir do ProdutoDTO
+        List<Long> ids = itensParaBaixa.stream()
+                .map(item -> item.produto().id())
+                .collect(Collectors.toList());
 
         Map<Long, Estoque> estoquesEncontrados = estoqueGateway.buscarPorIds(ids)
                 .stream()
                 .collect(Collectors.toMap(Estoque::getId, Function.identity()));
 
         for (ItemEstoqueDTO item : itensParaBaixa) {
-            Estoque estoque = estoquesEncontrados.get(item.id());
+            Estoque estoque = estoquesEncontrados.get(item.produto().id());
             if (estoque == null) {
-                throw new EstoqueNaoEncontradoException("Estoque não encontrado para o ID (produto ID): " + item.id());
+                // Mensagem de erro mais clara
+                throw new EstoqueNaoEncontradoException("Estoque não encontrado para o produto: " + item.produto().nome() + " (ID: " + item.produto().id() + ")");
             }
             if (estoque.getQuantidadeDisponivel() < item.quantidade()) {
-
+                // Mensagem de erro mais clara
                 throw new EstoqueInsuficienteException(
-                    String.format("Estoque insuficiente para ID %d. Solicitado: %d, Disponível: %d",
-                        item.id(), item.quantidade(), estoque.getQuantidadeDisponivel())
+                    String.format("Estoque insuficiente para o produto %s (ID: %d). Solicitado: %d, Disponível: %d",
+                        item.produto().nome(), item.produto().id(), item.quantidade(), estoque.getQuantidadeDisponivel())
                 );
             }
         }
 
         for (ItemEstoqueDTO item : itensParaBaixa) {
-            Estoque estoque = estoquesEncontrados.get(item.id());
+            Estoque estoque = estoquesEncontrados.get(item.produto().id());
             estoque.baixarEstoque(item.quantidade());
             estoqueGateway.salvar(estoque);
         }

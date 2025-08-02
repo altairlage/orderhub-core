@@ -44,7 +44,7 @@ public class EstoqueController {
         List<ItemEstoqueDTO> itensParaBaixa = dto.listaQtdProdutos().stream()
             .flatMap(map -> map.entrySet().stream())
             .map(entry -> new ItemEstoqueDTO(
-                entry.getValue().id(),
+                entry.getValue(), // Alterado para passar o ProdutoDTO completo
                 entry.getKey()
             ))
             .collect(Collectors.toList());
