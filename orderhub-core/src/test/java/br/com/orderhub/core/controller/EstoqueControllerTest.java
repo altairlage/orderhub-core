@@ -54,7 +54,7 @@ class EstoqueControllerTest {
         ProdutoDTO produtoDTO1 = new ProdutoDTO(10L, "Produto A", "Descrição", 100.0);
         ProdutoDTO produtoDTO2 = new ProdutoDTO(20L, "Produto B", "Descrição", 200.0);
         List<Map<String, Object>> listaItens = List.of(Map.of("quantidade", 2, "produto", produtoDTO1), Map.of("quantidade",1, "produto", produtoDTO2));
-        PedidoDTO pedidoDTO = new PedidoDTO(1L, null, new PagamentoDTO(1L, StatusPagamento.EM_ABERTO), listaItens, null);
+        PedidoDTO pedidoDTO = new PedidoDTO(1L, null, new PagamentoDTO(1L, "Adamastor", "email@email.com", 150.0,StatusPagamento.EM_ABERTO), listaItens, null);
 
         Estoque estoqueProduto10 = new Estoque(10L, 100, LocalDateTime.now(), LocalDateTime.now());
         Estoque estoqueProduto20 = new Estoque(20L, 50, LocalDateTime.now(), LocalDateTime.now());

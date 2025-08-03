@@ -2,7 +2,7 @@ package br.com.orderhub.core.domain.usecases.pagamentos;
 
 import br.com.orderhub.core.domain.entities.Pagamento;
 import br.com.orderhub.core.domain.enums.StatusPagamento;
-import br.com.orderhub.core.dto.clientes.ClienteDTO;
+import br.com.orderhub.core.dto.pagamentos.CriarPagamentoDTO;
 import br.com.orderhub.core.interfaces.IPagamentoGateway;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -22,47 +22,43 @@ public class GerarOrdemPagamentoTest {
 
     @Test
     public void deveGerarOrdemPagamentoComSucesso() throws Exception {
-        ClienteDTO clienteDTO = new ClienteDTO(
-                1L,
+        Pagamento fakeRequest = new Pagamento("Adamastor", "email@email.com", 150.0, StatusPagamento.EM_ABERTO);
+
+        CriarPagamentoDTO criarPagamentoDTO = new CriarPagamentoDTO(
                 "Adamastor",
-                "123.456.789-09",
-                "25/01/1900",
-                "R. Teste",
-                "(11) 91234-5678",
                 "email@email.com",
-                "infoPgto"
+                150.0,
+                StatusPagamento.EM_ABERTO
         );
-        Pagamento pagamentoMock = new Pagamento(1L, StatusPagamento.EM_ABERTO);
+        Pagamento pagamentoMock = new Pagamento(1L, "Adamastor", "email@email.com", 150.0, StatusPagamento.EM_ABERTO);
 
-        when(gateway.gerarOrdemPagamento(clienteDTO)).thenReturn(pagamentoMock);
+        when(gateway.gerarOrdemPagamento(fakeRequest)).thenReturn(pagamentoMock);
 
-        Pagamento resultado = gerarOrdemPagamento.run(clienteDTO);
+        Pagamento resultado = gerarOrdemPagamento.run(criarPagamentoDTO);
 
         assertNotNull(resultado);
         assertEquals(1L, resultado.getId());
-        verify(gateway).gerarOrdemPagamento(clienteDTO);
+        verify(gateway).gerarOrdemPagamento(fakeRequest);
     }
 
     @Test
     public void deveLancarRuntimeExceptionAoFalharGeracao() throws Exception {
-        ClienteDTO clienteDTO = new ClienteDTO(
-                1L,
+        Pagamento fakeRequest = new Pagamento("Adamastor", "email@email.com", 150.0, StatusPagamento.EM_ABERTO);
+
+        CriarPagamentoDTO criarPagamentoDTO = new CriarPagamentoDTO(
                 "Adamastor",
-                "123.456.789-09",
-                "25/01/1900",
-                "R. Teste",
-                "(11) 91234-5678",
                 "email@email.com",
-                "infoPgto"
+                150.0,
+                StatusPagamento.EM_ABERTO
         );
 
-        when(gateway.gerarOrdemPagamento(clienteDTO)).thenThrow(new RuntimeException("Falha interna"));
+        when(gateway.gerarOrdemPagamento(fakeRequest)).thenThrow(new RuntimeException("Falha interna"));
 
-        Exception ex = assertThrows(RuntimeException.class, () -> gerarOrdemPagamento.run(clienteDTO));
+        Exception ex = assertThrows(RuntimeException.class, () -> gerarOrdemPagamento.run(criarPagamentoDTO));
 
         assertTrue(ex.getMessage().contains("Erro ao gerar ordem de pagamento"));
         assertNotNull(ex.getCause());
         assertEquals("Falha interna", ex.getCause().getMessage());
-        verify(gateway).gerarOrdemPagamento(clienteDTO);
+        verify(gateway).gerarOrdemPagamento(fakeRequest);
     }
 }

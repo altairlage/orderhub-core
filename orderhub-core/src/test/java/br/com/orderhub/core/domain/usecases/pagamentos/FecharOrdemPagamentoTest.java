@@ -24,10 +24,10 @@ public class FecharOrdemPagamentoTest {
         public void deveFecharOrdemPagamentoComStatusValido() {
             Long id = 1L;
             StatusPagamento status = StatusPagamento.FECHADO_COM_SUCESSO;
-            Pagamento pagamentoMock = new Pagamento(id, StatusPagamento.EM_ABERTO);
+            Pagamento pagamentoMock = new Pagamento(id, "Adamastor", "email@email.com", 150.0, StatusPagamento.EM_ABERTO);
 
             when(gateway.buscarOrderPagamentoPorId(id)).thenReturn(pagamentoMock);
-            when(gateway.fecharOrdemPagamento(id, status)).thenReturn(new Pagamento(id, status));
+            when(gateway.fecharOrdemPagamento(id, status)).thenReturn(new Pagamento(id, "Adamastor", "email@email.com", 150.0, status));
 
             Pagamento resultado = fecharOrdemPagamento.run(id, status);
 

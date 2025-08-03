@@ -8,7 +8,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class PagamentoTest {
         @Test
         public void deveCriarPagamentoComIdEStatus() {
-            Pagamento pagamento = new Pagamento(1L, StatusPagamento.EM_ABERTO);
+            Pagamento pagamento = new Pagamento(1L, "Adamastor", "email@email.com", 150.0, StatusPagamento.EM_ABERTO);
 
             assertEquals(1L, pagamento.getId());
             assertEquals(StatusPagamento.EM_ABERTO, pagamento.getStatus());
@@ -16,7 +16,7 @@ public class PagamentoTest {
 
         @Test
         public void deveCriarPagamentoSomenteComStatus() {
-            Pagamento pagamento = new Pagamento(StatusPagamento.EM_ABERTO);
+            Pagamento pagamento = new Pagamento("Adamastor", "email@email.com", 150.0, StatusPagamento.EM_ABERTO);
 
             assertNull(pagamento.getId());
             assertEquals(StatusPagamento.EM_ABERTO, pagamento.getStatus());
@@ -24,7 +24,7 @@ public class PagamentoTest {
 
         @Test
         public void devePermitirAlterarStatusDeAbertoParaFechado() {
-            Pagamento pagamento = new Pagamento(1L, StatusPagamento.EM_ABERTO);
+            Pagamento pagamento = new Pagamento(1L, "Adamastor", "email@email.com", 150.0, StatusPagamento.EM_ABERTO);
 
             pagamento.setStatus(StatusPagamento.FECHADO_COM_SUCESSO);
 
@@ -33,7 +33,7 @@ public class PagamentoTest {
 
         @Test
         public void deveLancarExcecaoAoAlterarStatusDeAbertoParaNaoFechado() {
-            Pagamento pagamento = new Pagamento(1L, StatusPagamento.EM_ABERTO);
+            Pagamento pagamento = new Pagamento(1L, "Adamastor", "email@email.com", 150.0, StatusPagamento.EM_ABERTO);
 
             Exception ex = assertThrows(IllegalArgumentException.class, () -> pagamento.setStatus(StatusPagamento.EM_ABERTO));
 
@@ -42,7 +42,7 @@ public class PagamentoTest {
 
         @Test
         public void devePermitirAlterarStatusSeNaoEstiverAberto() {
-            Pagamento pagamento = new Pagamento(1L, StatusPagamento.FECHADO_FALHA_PAGAMENTO);
+            Pagamento pagamento = new Pagamento(1L, "Adamastor", "email@email.com", 150.0, StatusPagamento.FECHADO_FALHA_PAGAMENTO);
 
             pagamento.setStatus(StatusPagamento.FECHADO_COM_SUCESSO);
 

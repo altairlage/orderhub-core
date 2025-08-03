@@ -23,7 +23,7 @@ public class BuscarPagamentoPorIdTest {
     @Test
     public void deveRetornarPagamentoQuandoEncontrado() {
         Long id = 1L;
-        Pagamento pagamentoMock = new Pagamento(id, StatusPagamento.EM_ABERTO);
+        Pagamento pagamentoMock = new Pagamento(id, "Adamastor", "email@email.com", 150.0, StatusPagamento.EM_ABERTO);
         when(gateway.buscarOrderPagamentoPorId(id)).thenReturn(pagamentoMock);
 
         Pagamento resultado = buscarPagamentoPorId.run(id);
