@@ -96,8 +96,8 @@ public class PedidoControllerTest {
                 "infoPgto"
         );
 
-        pagamentoCriado1 = new Pagamento(1L, StatusPagamento.EM_ABERTO);
-        pagamentoCriado2 = new Pagamento(2L, StatusPagamento.EM_ABERTO);
+        pagamentoCriado1 = new Pagamento(1L, "Adamastor", "email@email.com", 150.0, StatusPagamento.EM_ABERTO);
+        pagamentoCriado2 = new Pagamento(2L, "Maristela", "email@email.com", 150.0, StatusPagamento.EM_ABERTO);
 
         criarPedidoDTO = new CriarPedidoDTO(1L, Arrays.asList(mapCriarProduto1, mapCriarProduto2), StatusPedido.ABERTO);
 

@@ -66,7 +66,7 @@ public class CriarPedidoTest {
                 "infoPgto"
         );
 
-        pagamentoCriado = new Pagamento(1L, StatusPagamento.EM_ABERTO);
+        pagamentoCriado = new Pagamento(1L, "Adamastor", "email@email.com", 150.0, StatusPagamento.EM_ABERTO);
 
         criarPedidoDTO = new CriarPedidoDTO(1L, Arrays.asList(mapCriarProduto1, mapCriarProduto2), StatusPedido.ABERTO);
 

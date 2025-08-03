@@ -14,7 +14,7 @@ public class PedidoTest {
 
     @Test
     public void deveCriarPedidoComSucesso(){
-        Pagamento pagamentoCriado = new Pagamento(1L, StatusPagamento.EM_ABERTO);
+        Pagamento pagamentoCriado = new Pagamento(1L, "Adamastor", "email@email.com", 150.0, StatusPagamento.EM_ABERTO);
         Produto produtoCriado1 = new Produto("Arroz", "Branco", 20.0);
         Produto produtoCriado2 = new Produto("Feijão", "Preto", 20.0);
         Map<String, Object>  mapProduto1 = new HashMap<>();
@@ -47,7 +47,7 @@ public class PedidoTest {
 
     @Test
     public void deveCompararPorEqualsComSucesso(){
-        Pagamento pagamentoCriado = new Pagamento(1L, StatusPagamento.EM_ABERTO);
+        Pagamento pagamentoCriado = new Pagamento(1L, "Adamastor", "email@email.com", 150.0, StatusPagamento.EM_ABERTO);
         Produto produtoCriado1 = new Produto("Arroz", "Branco", 20.0);
         Produto produtoCriado2 = new Produto("Feijão", "Preto", 20.0);
         Map<String, Object>  mapProduto1 = new HashMap<>();
@@ -74,7 +74,7 @@ public class PedidoTest {
 
     @Test
     public void deveGerarHashCodeConsistente(){
-        Pagamento pagamentoCriado = new Pagamento(1L, StatusPagamento.EM_ABERTO);
+        Pagamento pagamentoCriado = new Pagamento(1L, "Adamastor", "email@email.com", 150.0, StatusPagamento.EM_ABERTO);
         Produto produtoCriado1 = new Produto("Arroz", "Branco", 20.0);
         Produto produtoCriado2 = new Produto("Feijão", "Preto", 20.0);
         Map<String, Object>  mapProduto1 = new HashMap<>();
