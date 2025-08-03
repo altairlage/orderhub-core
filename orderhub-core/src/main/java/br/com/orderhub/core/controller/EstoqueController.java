@@ -4,6 +4,7 @@ import br.com.orderhub.core.domain.entities.Estoque;
 import br.com.orderhub.core.domain.usecases.estoques.*;
 import br.com.orderhub.core.dto.estoques.ItemEstoqueDTO;
 import br.com.orderhub.core.dto.pedidos.PedidoDTO;
+import br.com.orderhub.core.dto.produtos.ProdutoDTO;
 import br.com.orderhub.core.exceptions.EstoqueNaoEncontradoException;
 import br.com.orderhub.core.interfaces.IEstoqueGateway;
 
@@ -42,15 +43,27 @@ public class EstoqueController {
 
     public void baixarEstoquePorPedido(PedidoDTO dto) {
         List<ItemEstoqueDTO> itensParaBaixa = dto.listaQtdProdutos().stream()
-            .flatMap(map -> map.entrySet().stream())
-            .map(entry -> new ItemEstoqueDTO(
-                entry.getValue(), // Alterado para passar o ProdutoDTO completo
-                entry.getKey()
-            ))
-            .collect(Collectors.toList());
-        
+                .map(itemMap -> {
+                    ProdutoDTO produto = (ProdutoDTO) itemMap.get("produto");
+                    Integer quantidade = (Integer) itemMap.get("quantidade");
+                    return new ItemEstoqueDTO(produto, quantidade);
+                })
+                .collect(Collectors.toList());
+
         baixarEstoqueMultiplo.executar(itensParaBaixa);
     }
+
+//    public void baixarEstoquePorPedido(PedidoDTO dto) {
+//        List<ItemEstoqueDTO> itensParaBaixa = dto.listaQtdProdutos().stream()
+//            .flatMap(map -> map.entrySet().stream())
+//            .map(entry -> new ItemEstoqueDTO(
+//                (ProdutoDTO) entry.getValue(),
+//                    Integer.parseInt(entry.getKey())
+//            ))
+//            .collect(Collectors.toList());
+//
+//        baixarEstoqueMultiplo.executar(itensParaBaixa);
+//    }
     
     public void baixarEstoqueMultiplo(List<ItemEstoqueDTO> itens) {
         baixarEstoqueMultiplo.executar(itens);

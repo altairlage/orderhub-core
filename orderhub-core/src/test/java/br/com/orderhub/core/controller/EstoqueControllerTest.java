@@ -1,8 +1,10 @@
 package br.com.orderhub.core.controller;
 
 import br.com.orderhub.core.domain.entities.Estoque;
+import br.com.orderhub.core.domain.enums.StatusPagamento;
 import br.com.orderhub.core.domain.usecases.estoques.BaixarEstoqueMultiplo; // Importar
 import br.com.orderhub.core.dto.estoques.ItemEstoqueDTO;
+import br.com.orderhub.core.dto.pagamentos.PagamentoDTO;
 import br.com.orderhub.core.dto.pedidos.PedidoDTO;
 import br.com.orderhub.core.dto.produtos.ProdutoDTO;
 import br.com.orderhub.core.exceptions.EstoqueNaoEncontradoException;
@@ -51,8 +53,8 @@ class EstoqueControllerTest {
     void deveBaixarEstoquePorPedidoDeFormaAtomica() {
         ProdutoDTO produtoDTO1 = new ProdutoDTO(10L, "Produto A", "Descrição", 100.0);
         ProdutoDTO produtoDTO2 = new ProdutoDTO(20L, "Produto B", "Descrição", 200.0);
-        List<Map<Integer, ProdutoDTO>> listaItens = List.of(Map.of(2, produtoDTO1), Map.of(1, produtoDTO2));
-        PedidoDTO pedidoDTO = new PedidoDTO(1L, null, 1L, listaItens, null);
+        List<Map<String, Object>> listaItens = List.of(Map.of("quantidade", 2, "produto", produtoDTO1), Map.of("quantidade",1, "produto", produtoDTO2));
+        PedidoDTO pedidoDTO = new PedidoDTO(1L, null, new PagamentoDTO(1L, StatusPagamento.EM_ABERTO), listaItens, null);
 
         Estoque estoqueProduto10 = new Estoque(10L, 100, LocalDateTime.now(), LocalDateTime.now());
         Estoque estoqueProduto20 = new Estoque(20L, 50, LocalDateTime.now(), LocalDateTime.now());
