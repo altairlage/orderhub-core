@@ -2,7 +2,6 @@ package br.com.orderhub.core.controller;
 
 import br.com.orderhub.core.domain.entities.Pagamento;
 import br.com.orderhub.core.domain.enums.StatusPagamento;
-import br.com.orderhub.core.dto.clientes.ClienteDTO;
 import br.com.orderhub.core.dto.pagamentos.CriarPagamentoDTO;
 import br.com.orderhub.core.dto.pagamentos.PagamentoDTO;
 import br.com.orderhub.core.interfaces.IPagamentoGateway;
