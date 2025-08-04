@@ -14,8 +14,6 @@ import java.util.List;
 
 public class PedidoController {
     private final IPedidoGateway pedidoGateway;
-    private final IClienteGateway clienteGateway;
-    private final IProdutoGateway produtoGateway;
     private final BuscarPedidoPorId buscarPedidoPorId;
     private final BuscarPedidosPorIdCliente buscarPedidosPorIdCliente;
     private final CriarPedido criarPedido;
@@ -23,13 +21,11 @@ public class PedidoController {
     private final EditarPedido editarPedido;
     private final ListarTodosPedidos listarTodosPedidos;
 
-    public PedidoController(IPedidoGateway pedidoGateway, IClienteGateway clienteGateway, IProdutoGateway produtoGateway){
+    public PedidoController(IPedidoGateway pedidoGateway){
         this.pedidoGateway = pedidoGateway;
-        this.clienteGateway = clienteGateway;
-        this.produtoGateway = produtoGateway;
         this.buscarPedidoPorId = new BuscarPedidoPorId(this.pedidoGateway);
-        this.buscarPedidosPorIdCliente = new BuscarPedidosPorIdCliente(this.pedidoGateway,this.clienteGateway);
-        this.criarPedido = new CriarPedido(this.pedidoGateway, this.clienteGateway, this.produtoGateway);
+        this.buscarPedidosPorIdCliente = new BuscarPedidosPorIdCliente(this.pedidoGateway);
+        this.criarPedido = new CriarPedido(this.pedidoGateway);
         this.editarPedidoStatus = new EditarPedidoStatus(this.pedidoGateway);
         this.editarPedido = new EditarPedido(this.pedidoGateway);
         this.listarTodosPedidos = new ListarTodosPedidos(this.pedidoGateway);

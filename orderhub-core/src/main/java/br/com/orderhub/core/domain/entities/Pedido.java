@@ -11,21 +11,21 @@ import java.util.Map;
 @EqualsAndHashCode
 public class Pedido {
     private Long idPedido;
-    private Cliente cliente;
-    private Pagamento pagamento;
+    private Long idCliente;
+    private Long idPagamento;
     private List<Map<String, Object>> listaQtdProdutos;
     private StatusPedido status = null;
 
-    public Pedido(Long idPedido, Cliente cliente, Pagamento pagamento, List<Map<String, Object>> listaQtdProdutos, StatusPedido status) {
+    public Pedido(Long idPedido, Long idCliente, Long idPagamento, List<Map<String, Object>> listaQtdProdutos, StatusPedido status) {
         setIdPedido(idPedido);
-        setCliente(cliente);
-        setPagamento(pagamento);
+        setIdCliente(idCliente);
+        setIdPagamento(idPagamento);
         setListaQtdProdutos(listaQtdProdutos);
         setStatus(status);
     }
 
-    public Pedido(Cliente cliente, List<Map<String, Object>> listaQtdProdutos, StatusPedido status) {
-        setCliente(cliente);
+    public Pedido(Long idCliente, List<Map<String, Object>> listaQtdProdutos, StatusPedido status) {
+        setIdCliente(idCliente);
         setListaQtdProdutos(listaQtdProdutos);
         setStatus(status);
     }
@@ -37,18 +37,18 @@ public class Pedido {
         this.idPedido = idPedido;
     }
 
-    public void setCliente(Cliente cliente) {
-        if (cliente == null || cliente.getId() == null || cliente.getId() <= 0) {
+    public void setIdCliente(Long idCliente) {
+        if (idCliente == null || idCliente <= 0) {
             throw new IllegalArgumentException("ID do cliente está vazio ou é inválido");
         }
-        this.cliente = cliente;
+        this.idCliente = idCliente;
     }
 
-    public void setPagamento(Pagamento pagamento) {
-        if (pagamento == null || pagamento.getId() == null || pagamento.getId() <= 0) {
+    public void setIdPagamento(Long idPagamento) {
+        if (idPagamento == null || idPagamento <= 0) {
             throw new IllegalArgumentException("ID do pagamento está vazio ou é inválido");
         }
-        this.pagamento = pagamento;
+        this.idPagamento = idPagamento;
     }
 
     public void setListaQtdProdutos(List<Map<String, Object>> listaQtdProdutos) {
@@ -63,25 +63,5 @@ public class Pedido {
         if (this.status != null && this.status.equals(StatusPedido.ABERTO) && !status.toString().contains("FECHADO"))
             throw new IllegalArgumentException("Pedido com status 'ABERTO' só pode ser alterado para algum status 'FECHADO'");
         this.status = status;
-    }
-
-    public Double calcularValorTotal() {
-        double valorTotal = 0.0;
-        for(Map<String, Object> produtoEQtdNoPedido: this.listaQtdProdutos){
-            int quantidade = 0;
-            Produto produto = new Produto();
-
-            for(Map.Entry<String, Object> entry : produtoEQtdNoPedido.entrySet()){
-                if (entry.getKey().equals("quantidade")) {
-                    quantidade = Integer.parseInt(entry.getValue().toString());
-                }
-                if (entry.getKey().equals("produto")) {
-                    produto = (Produto) entry.getValue();
-                }
-            }
-
-            valorTotal += quantidade * produto.getPreco();
-        }
-        return valorTotal;
     }
 }

@@ -26,8 +26,6 @@ import static org.mockito.Mockito.*;
 public class CriarPedidoTest {
     private CriarPedido criarPedido;
     private IPedidoGateway pedidoGateway;
-    private IClienteGateway clienteGateway;
-    private IProdutoGateway produtoGateway;
 
     // Variáveis muito utilizadas
     private Produto produtoCriado;
@@ -35,17 +33,13 @@ public class CriarPedidoTest {
     private Map<String, Object> mapCriarProduto2 = new HashMap<>();
     private Map<String, Object> mapProduto1 = new HashMap<>();
     private Map<String, Object> mapProduto2 = new HashMap<>();
-    private Cliente clienteCriado;
     private Pedido pedidoCriado;
     private CriarPedidoDTO criarPedidoDTO;
-    private Pagamento pagamentoCriado;
 
     @BeforeEach
     public void setUp() {
         pedidoGateway = mock(IPedidoGateway.class);
-        clienteGateway = mock(IClienteGateway.class);
-        produtoGateway = mock(IProdutoGateway.class);
-        criarPedido = new CriarPedido(pedidoGateway, clienteGateway, produtoGateway);
+        criarPedido = new CriarPedido(pedidoGateway);
 
         produtoCriado = new Produto("Arroz", "Branco", 20.0);
 
@@ -55,40 +49,22 @@ public class CriarPedidoTest {
         mapCriarProduto2.put("quantidade", 1);
         mapCriarProduto2.put("idProduto", 2L);
 
-        clienteCriado = new Cliente(
-                1L,
-                "Adamastor",
-                "123.456.789-10",
-                "25/01/1900",
-                "R. Teste",
-                "(11) 91234-5678",
-                "email@email.com",
-                "infoPgto"
-        );
-
-        pagamentoCriado = new Pagamento(1L, "Adamastor", "email@email.com", 150.0, StatusPagamento.EM_ABERTO);
+        Long idCliente = 1L;
+        Long idPagamento = 1L;
 
         criarPedidoDTO = new CriarPedidoDTO(1L, Arrays.asList(mapCriarProduto1, mapCriarProduto2), StatusPedido.ABERTO);
 
-        pedidoCriado = new Pedido(1L, clienteCriado, pagamentoCriado, Arrays.asList(mapProduto1, mapProduto2), StatusPedido.ABERTO);
+        pedidoCriado = new Pedido(1L, idCliente, idPagamento, Arrays.asList(mapProduto1, mapProduto2), StatusPedido.ABERTO);
     }
 
     @Test
     public void deveCriarPedidoComSucesso(){
-        when(clienteGateway.buscarPorId(any(Long.class))).thenReturn(clienteCriado);
-        when(produtoGateway.buscarPorId(any(Long.class))).thenReturn(produtoCriado);
         when(pedidoGateway.criar(any(Pedido.class))).thenReturn(pedidoCriado);
 
         Pedido resultado = criarPedido.run(criarPedidoDTO);
 
         assertNotNull(resultado);
-        assertEquals(1L, resultado.getCliente().getId());
+        assertEquals(1L, resultado.getIdCliente());
     }
 
-    @Test
-    public void deveLancarExcecaoQuandoClienteNaoExiste(){
-        when(clienteGateway.buscarPorCpf(any(String.class))).thenReturn(null);
-
-        assertThrows(ClienteNaoEncontradoException.class, () -> criarPedido.run(criarPedidoDTO));
-    }
 }

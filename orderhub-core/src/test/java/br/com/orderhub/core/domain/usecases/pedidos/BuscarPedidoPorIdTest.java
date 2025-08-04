@@ -40,16 +40,10 @@ public class BuscarPedidoPorIdTest {
         mapProduto2.put("quantidade", 2);
         mapProduto2.put("produto", produtoCriado2);
 
-        Cliente cliente = new Cliente(1L,
-                "Jorge",
-                "123.456.789-10",
-                "07/12/2015",
-                "",
-                "(99) 99999-9999",
-                "email@email.com",
-                "");
+        Long idCliente = 1L;
+        Long idPagamento1 = 1L;
 
-        Pedido pedido = new Pedido(1L, cliente, pagamentoCriado, Arrays.asList(mapProduto1, mapProduto2), StatusPedido.ABERTO);
+        Pedido pedido = new Pedido(1L, idCliente, idPagamento1, Arrays.asList(mapProduto1, mapProduto2), StatusPedido.ABERTO);
 
         when(pedidoGateway.buscarPorId(1L)).thenReturn(pedido);
 
@@ -57,7 +51,7 @@ public class BuscarPedidoPorIdTest {
 
         assertNotNull(resultado);
         assertEquals(1L, resultado.getIdPedido());
-        assertEquals("Jorge", resultado.getCliente().getNome());
+        assertEquals(idCliente, resultado.getIdCliente());
         assertEquals(StatusPedido.ABERTO, resultado.getStatus());
         verify(pedidoGateway).buscarPorId(1L);
     }

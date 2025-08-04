@@ -25,19 +25,16 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class BuscarPedidoPorIdClienteTest {
     private IPedidoGateway pedidoGateway;
-    private IClienteGateway clienteGateway;
     private BuscarPedidosPorIdCliente buscarPedidosPorIdCliente;
 
     @BeforeEach
     public void setUp(){
         pedidoGateway = mock(IPedidoGateway.class);
-        clienteGateway = mock(IClienteGateway.class);
-        buscarPedidosPorIdCliente = new BuscarPedidosPorIdCliente(pedidoGateway, clienteGateway);
+        buscarPedidosPorIdCliente = new BuscarPedidosPorIdCliente(pedidoGateway);
     }
 
     @Test
     public void deveBuscarPedidosPorIdClienteComSucesso(){
-        Pagamento pagamentoCriado = new Pagamento(1L, "Adamastor", "email@email.com", 150.0, StatusPagamento.EM_ABERTO);
         Produto produtoCriado1 = new Produto("Arroz", "Branco", 20.0);
         Produto produtoCriado2 = new Produto("Feijão", "Preto", 20.0);
         Map<String, Object>  mapProduto1 = new HashMap<>();
@@ -47,35 +44,20 @@ public class BuscarPedidoPorIdClienteTest {
         mapProduto2.put("quantidade", 2);
         mapProduto2.put("produto", produtoCriado2);
 
-        Cliente cliente = new Cliente(1L,
-                "Jorge",
-                "123.456.789-10",
-                "07/12/2015",
-                "",
-                "(99) 99999-9999",
-                "email@email.com",
-                ""
-        );
+        Long idCliente = 1L;
+        Long idPagamento = 1L;
 
-        Pedido pedido1 = new Pedido(1L, cliente, pagamentoCriado, Arrays.asList(mapProduto1, mapProduto2), StatusPedido.ABERTO);
-        Pedido pedido2 = new Pedido(2L, cliente, pagamentoCriado, Arrays.asList(mapProduto1, mapProduto2), StatusPedido.ABERTO);
+        Pedido pedido1 = new Pedido(1L, idCliente, idPagamento, Arrays.asList(mapProduto1, mapProduto2), StatusPedido.ABERTO);
+        Pedido pedido2 = new Pedido(2L, idCliente, idPagamento, Arrays.asList(mapProduto1, mapProduto2), StatusPedido.ABERTO);
 
-        when(clienteGateway.buscarPorId(any(Long.class))).thenReturn(cliente);
         when(pedidoGateway.buscarPorIdCliente(1L)).thenReturn(Arrays.asList(pedido1, pedido2));
 
         List<Pedido> resultado = buscarPedidosPorIdCliente.run(1L);
 
         assertFalse(resultado.isEmpty());
-        assertEquals(1L, resultado.get(0).getCliente().getId());
+        assertEquals(1L, resultado.get(0).getIdCliente());
         assertEquals(StatusPedido.ABERTO, resultado.get(0).getStatus());
-        assertEquals(1L, resultado.get(1).getCliente().getId());
+        assertEquals(1L, resultado.get(1).getIdCliente());
         assertEquals(StatusPedido.ABERTO, resultado.get(1).getStatus());
-    }
-
-    @Test
-    public void deveLancarExcecaoQuandoClienteNaoExiste(){
-        when(clienteGateway.buscarPorId(any(Long.class))).thenReturn(null);
-
-        assertThrows(ClienteNaoEncontradoException.class, () -> buscarPedidosPorIdCliente.run(1L));
     }
 }

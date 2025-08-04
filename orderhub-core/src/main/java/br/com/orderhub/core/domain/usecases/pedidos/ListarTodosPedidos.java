@@ -15,11 +15,6 @@ public class ListarTodosPedidos {
     }
 
     public List<Pedido> run(){
-        List<Pedido> listaResposta = new ArrayList<>();
-        List<Pedido> pedidos = gateway.listarTodos();
-        for (Pedido pedido : pedidos){
-            if (pedido.getStatus().equals(StatusPedido.ABERTO)) listaResposta.add(pedido);
-        }
-        return listaResposta;
+        return gateway.listarTodos();
     }
 }
