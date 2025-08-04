@@ -3,6 +3,7 @@ package br.com.orderhub.core.domain.usecases.pagamentos;
 import br.com.orderhub.core.domain.entities.Pagamento;
 import br.com.orderhub.core.domain.enums.StatusPagamento;
 import br.com.orderhub.core.dto.pagamentos.CriarPagamentoDTO;
+import br.com.orderhub.core.exceptions.PagamentoErroGeracaoException;
 import br.com.orderhub.core.interfaces.IPagamentoGateway;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -54,11 +55,9 @@ public class GerarOrdemPagamentoTest {
 
         when(gateway.gerarOrdemPagamento(fakeRequest)).thenThrow(new RuntimeException("Falha interna"));
 
-        Exception ex = assertThrows(RuntimeException.class, () -> gerarOrdemPagamento.run(criarPagamentoDTO));
+        Exception ex = assertThrows(PagamentoErroGeracaoException.class, () -> gerarOrdemPagamento.run(criarPagamentoDTO));
 
         assertTrue(ex.getMessage().contains("Erro ao gerar ordem de pagamento"));
-        assertNotNull(ex.getCause());
-        assertEquals("Falha interna", ex.getCause().getMessage());
         verify(gateway).gerarOrdemPagamento(fakeRequest);
     }
 }
