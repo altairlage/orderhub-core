@@ -2,6 +2,7 @@ package br.com.orderhub.core.domain.usecases.pagamentos;
 
 import br.com.orderhub.core.domain.entities.Pagamento;
 import br.com.orderhub.core.dto.pagamentos.CriarPagamentoDTO;
+import br.com.orderhub.core.exceptions.PagamentoErroGeracaoException;
 import br.com.orderhub.core.interfaces.IPagamentoGateway;
 
 public class GerarOrdemPagamento {
@@ -21,7 +22,7 @@ public class GerarOrdemPagamento {
 
             return gateway.gerarOrdemPagamento(pagamentoDTO);
         } catch (Exception e){
-            throw new RuntimeException("Erro ao gerar ordem de pagamento", e);
+            throw new PagamentoErroGeracaoException("Erro ao gerar ordem de pagamento. Exception:" + e);
         }
     }
 }
