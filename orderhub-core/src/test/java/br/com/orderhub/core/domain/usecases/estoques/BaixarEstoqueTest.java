@@ -1,15 +1,10 @@
 package br.com.orderhub.core.domain.usecases.estoques;
 
-import java.time.LocalDateTime;
-import java.util.Optional;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import br.com.orderhub.core.domain.entities.Estoque;
@@ -18,7 +13,6 @@ import br.com.orderhub.core.exceptions.EstoqueNaoEncontradoException;
 import br.com.orderhub.core.interfaces.IEstoqueGateway;
 
 class BaixarEstoqueTest {
-
     private IEstoqueGateway estoqueGateway;
     private BaixarEstoque baixarEstoque;
 
@@ -30,53 +24,44 @@ class BaixarEstoqueTest {
 
     @Test
     void deveBaixarEstoqueComSucesso() {
-        Long id = 1L;
-        int quantidadeSolicitada = 3;
-        Estoque estoque = new Estoque(id, 10, LocalDateTime.now(), LocalDateTime.now());
+        Estoque pedido = new Estoque(1L, 5);
+        Estoque atual = new Estoque(1L, 10);
 
-        when(estoqueGateway.buscarPorId(id)).thenReturn(Optional.of(estoque));
+        when(estoqueGateway.consultarEstoquePorIdProduto(1L)).thenReturn(atual);
+        when(estoqueGateway.baixarEstoque(pedido)).thenReturn(new Estoque(1L, 5));
 
-        baixarEstoque.executar(id, quantidadeSolicitada);
+        Estoque resultado = baixarEstoque.run(pedido);
 
-        assertEquals(7, estoque.getQuantidadeDisponivel());
-        verify(estoqueGateway).salvar(estoque);
+        assertEquals(1L, resultado.getIdProduto());
+        assertEquals(5, resultado.getQuantidadeDisponivel());
     }
 
     @Test
-    void deveLancarExcecaoQuandoEstoqueNaoEncontrado() {
-        Long id = 999L;
+    void deveLancarExcecaoParaQuantidadeZeroOuNegativa() {
+        Estoque pedido = new Estoque(1L, 0);
 
-        when(estoqueGateway.buscarPorId(id)).thenReturn(Optional.empty());
-
-        EstoqueNaoEncontradoException exception = assertThrows(
-                EstoqueNaoEncontradoException.class,
-                () -> baixarEstoque.executar(id, 5));
-
-        assertTrue(exception.getMessage().contains("Estoque não encontrado"));
+        Exception ex = assertThrows(IllegalArgumentException.class, () -> baixarEstoque.run(pedido));
+        assertEquals("A quantidade solicitada para baixar do estoque deve ser maior que zero.", ex.getMessage());
     }
 
     @Test
-    void deveLancarExcecaoQuandoEstoqueInsuficiente() {
-        Long id = 1L;
-        Estoque estoque = new Estoque(id, 2, LocalDateTime.now(), LocalDateTime.now());
+    void deveLancarExcecaoSeProdutoNaoEncontrado() {
+        Estoque pedido = new Estoque(99L, 5);
 
-        when(estoqueGateway.buscarPorId(id)).thenReturn(Optional.of(estoque));
+        when(estoqueGateway.consultarEstoquePorIdProduto(99L)).thenReturn(null);
 
-        EstoqueInsuficienteException exception = assertThrows(
-                EstoqueInsuficienteException.class,
-                () -> baixarEstoque.executar(id, 5));
-
-        assertTrue(exception.getMessage().contains("Estoque insuficiente"));
+        Exception ex = assertThrows(EstoqueNaoEncontradoException.class, () -> baixarEstoque.run(pedido));
+        assertEquals("Produto de ID 99 não encontrado no estoque", ex.getMessage());
     }
 
     @Test
-    void deveLancarExcecaoQuandoQuantidadeMenorOuIgualAZero() {
-        Long id = 1L;
+    void deveLancarExcecaoSeEstoqueInsuficiente() {
+        Estoque pedido = new Estoque(1L, 10);
+        Estoque atual = new Estoque(1L, 5);
 
-        IllegalArgumentException exception = assertThrows(
-                IllegalArgumentException.class,
-                () -> baixarEstoque.executar(id, 0));
+        when(estoqueGateway.consultarEstoquePorIdProduto(1L)).thenReturn(atual);
 
-        assertEquals("A quantidade solicitada deve ser maior que zero.", exception.getMessage());
+        Exception ex = assertThrows(EstoqueInsuficienteException.class, () -> baixarEstoque.run(pedido));
+        assertEquals("Quantidade insuficiente de produto ID 1 no estoque", ex.getMessage());
     }
 }

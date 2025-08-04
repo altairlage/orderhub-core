@@ -1,23 +1,33 @@
 package br.com.orderhub.core.domain.entities;
 
-import java.time.LocalDateTime;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
-@Data
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
+@Getter
+@EqualsAndHashCode
 public class Estoque {
 
-    private Long id;
+    private Long idProduto;
     private Integer quantidadeDisponivel;
 
-    private LocalDateTime criadoEm;
-    private LocalDateTime atualizadoEm;
+    public Estoque(Long idProduto, Integer quantidadeDisponivel) {
+        setIdProduto(idProduto);
+        setQuantidadeDisponivel(quantidadeDisponivel);
+    }
+
+    public void setIdProduto(Long idProduto) {
+        if (idProduto == null || idProduto <= 0) {
+            throw new IllegalArgumentException("ID de Produto nulo ou inválido");
+        }
+        this.idProduto = idProduto;
+    }
+
+    public void setQuantidadeDisponivel(Integer quantidadeDisponivel) {
+        if (quantidadeDisponivel == null) {
+            throw new IllegalArgumentException("Quantidade disponível para produto nulo");
+        }
+        this.quantidadeDisponivel = quantidadeDisponivel;
+    }
 
     public void baixarEstoque(int quantidade) {
         if (quantidade <= 0) {
@@ -29,7 +39,6 @@ public class Estoque {
         }
 
         this.quantidadeDisponivel -= quantidade;
-        this.atualizadoEm = LocalDateTime.now();
     }
 
     public void reporEstoque(int quantidade) {
@@ -38,6 +47,5 @@ public class Estoque {
         }
 
         this.quantidadeDisponivel += quantidade;
-        this.atualizadoEm = LocalDateTime.now();
     }
 }

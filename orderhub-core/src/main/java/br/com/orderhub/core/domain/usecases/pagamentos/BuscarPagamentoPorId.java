@@ -15,7 +15,7 @@ public class BuscarPagamentoPorId {
         Pagamento pagamento = gateway.buscarOrderPagamentoPorId(idOrdemPagamento);
 
         if(pagamento == null){
-            throw new OrdemPagamentoNaoEncontradaException("Ordem de pagamento com id " + idOrdemPagamento + " não encontrada");
+            throw new OrdemPagamentoNaoEncontradaException("Ordem de pagamento com idProduto " + idOrdemPagamento + " não encontrada");
         }
 
         return pagamento;

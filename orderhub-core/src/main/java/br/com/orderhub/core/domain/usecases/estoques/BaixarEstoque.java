@@ -1,7 +1,5 @@
 package br.com.orderhub.core.domain.usecases.estoques;
 
-import java.util.function.Supplier;
-
 import br.com.orderhub.core.domain.entities.Estoque;
 import br.com.orderhub.core.exceptions.EstoqueInsuficienteException;
 import br.com.orderhub.core.exceptions.EstoqueNaoEncontradoException;
@@ -15,29 +13,22 @@ public class BaixarEstoque {
         this.estoqueGateway = estoqueGateway;
     }
 
-    // MUDANÇA: Assinatura do método agora usa Long id
-    public void executar(Long id, int quantidade) {
-        if (quantidade <= 0) {
-            throw new IllegalArgumentException("A quantidade solicitada deve ser maior que zero.");
+    public Estoque run(Estoque estoqueDTO) {
+        if (estoqueDTO.getQuantidadeDisponivel() <= 0) {
+            throw new IllegalArgumentException("A quantidade solicitada para baixar do estoque deve ser maior que zero.");
         }
 
-        // MUDANÇA: Mensagem de erro atualizada para ID
-        Supplier<EstoqueNaoEncontradoException> exception =
-                () -> new EstoqueNaoEncontradoException("Estoque não encontrado para o ID: " + id);
+        Estoque produtoEmEstoque = estoqueGateway.consultarEstoquePorIdProduto(estoqueDTO.getIdProduto());
 
-        // MUDANÇA: Chama o novo método do gateway
-        Estoque estoque = estoqueGateway.buscarPorId(id)
-                .orElseThrow(exception);
-
-        if (estoque.getQuantidadeDisponivel() < quantidade) {
-            // MUDANÇA: Mensagem de erro atualizada para ID
-            throw new EstoqueInsuficienteException(
-                String.format("Estoque insuficiente para o ID: %d. Solicitado: %d, Disponível: %d",
-                    id, quantidade, estoque.getQuantidadeDisponivel())
-            );
+        if (produtoEmEstoque == null) {
+            throw new EstoqueNaoEncontradoException("Produto de ID " + estoqueDTO.getIdProduto() + " não encontrado no estoque");
         }
 
-        estoque.baixarEstoque(quantidade);
-        estoqueGateway.salvar(estoque);
+
+        if (produtoEmEstoque.getQuantidadeDisponivel() < estoqueDTO.getQuantidadeDisponivel()) {
+            throw new EstoqueInsuficienteException("Quantidade insuficiente de produto ID " + produtoEmEstoque.getIdProduto() + " no estoque");
+        }
+
+        return estoqueGateway.baixarEstoque(estoqueDTO);
     }
 }

@@ -40,7 +40,7 @@ public class BuscarPagamentoPorIdTest {
 
         Exception ex = assertThrows(OrdemPagamentoNaoEncontradaException.class, () -> buscarPagamentoPorId.run(id));
 
-        assertEquals("Ordem de pagamento com id 2 não encontrada", ex.getMessage());
+        assertEquals("Ordem de pagamento com idProduto 2 não encontrada", ex.getMessage());
         verify(gateway).buscarOrderPagamentoPorId(id);
     }
 }
