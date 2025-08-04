@@ -1,6 +1,5 @@
 package br.com.orderhub.core.domain.usecases.pedidos;
 
-import br.com.orderhub.core.domain.entities.Cliente;
 import br.com.orderhub.core.domain.entities.Pagamento;
 import br.com.orderhub.core.domain.entities.Pedido;
 import br.com.orderhub.core.domain.entities.Produto;

@@ -1,10 +1,7 @@
 package br.com.orderhub.core.domain.usecases.pedidos;
 
-import br.com.orderhub.core.domain.entities.Cliente;
 import br.com.orderhub.core.domain.entities.Pedido;
-import br.com.orderhub.core.exceptions.ClienteNaoEncontradoException;
 import br.com.orderhub.core.exceptions.PedidoNaoEncontradoException;
-import br.com.orderhub.core.interfaces.IClienteGateway;
 import br.com.orderhub.core.interfaces.IPedidoGateway;
 
 import java.util.List;

@@ -6,9 +6,7 @@ import br.com.orderhub.core.domain.presenters.PedidoPresenter;
 import br.com.orderhub.core.domain.usecases.pedidos.*;
 import br.com.orderhub.core.dto.pedidos.CriarPedidoDTO;
 import br.com.orderhub.core.dto.pedidos.PedidoDTO;
-import br.com.orderhub.core.interfaces.IClienteGateway;
 import br.com.orderhub.core.interfaces.IPedidoGateway;
-import br.com.orderhub.core.interfaces.IProdutoGateway;
 
 import java.util.List;
 

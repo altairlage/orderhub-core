@@ -1,8 +1,6 @@
 package br.com.orderhub.core.dto.pedidos;
 
 import br.com.orderhub.core.domain.enums.StatusPedido;
-import br.com.orderhub.core.dto.clientes.ClienteDTO;
-import br.com.orderhub.core.dto.pagamentos.PagamentoDTO;
 
 import java.util.List;
 import java.util.Map;

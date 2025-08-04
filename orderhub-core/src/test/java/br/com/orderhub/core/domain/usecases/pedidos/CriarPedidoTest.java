@@ -1,16 +1,10 @@
 package br.com.orderhub.core.domain.usecases.pedidos;
 
-import br.com.orderhub.core.domain.entities.Cliente;
-import br.com.orderhub.core.domain.entities.Pagamento;
 import br.com.orderhub.core.domain.entities.Pedido;
 import br.com.orderhub.core.domain.entities.Produto;
-import br.com.orderhub.core.domain.enums.StatusPagamento;
 import br.com.orderhub.core.domain.enums.StatusPedido;
 import br.com.orderhub.core.dto.pedidos.CriarPedidoDTO;
-import br.com.orderhub.core.exceptions.ClienteNaoEncontradoException;
-import br.com.orderhub.core.interfaces.IClienteGateway;
 import br.com.orderhub.core.interfaces.IPedidoGateway;
-import br.com.orderhub.core.interfaces.IProdutoGateway;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -18,10 +12,11 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
-
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class CriarPedidoTest {
     private CriarPedido criarPedido;

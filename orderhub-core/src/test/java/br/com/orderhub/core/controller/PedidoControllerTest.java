@@ -1,20 +1,12 @@
 package br.com.orderhub.core.controller;
 
-import br.com.orderhub.core.domain.entities.Cliente;
-import br.com.orderhub.core.domain.entities.Pagamento;
 import br.com.orderhub.core.domain.entities.Pedido;
 import br.com.orderhub.core.domain.entities.Produto;
-import br.com.orderhub.core.domain.enums.StatusPagamento;
 import br.com.orderhub.core.domain.enums.StatusPedido;
-import br.com.orderhub.core.domain.presenters.PagamentoPresenter;
 import br.com.orderhub.core.domain.presenters.PedidoPresenter;
-import br.com.orderhub.core.dto.clientes.ClienteDTO;
 import br.com.orderhub.core.dto.pedidos.CriarPedidoDTO;
 import br.com.orderhub.core.dto.pedidos.PedidoDTO;
-import br.com.orderhub.core.dto.produtos.CriarProdutoDTO;
-import br.com.orderhub.core.interfaces.IClienteGateway;
 import br.com.orderhub.core.interfaces.IPedidoGateway;
-import br.com.orderhub.core.interfaces.IProdutoGateway;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
