@@ -1,110 +1,85 @@
 package br.com.orderhub.core.controller;
 
 import br.com.orderhub.core.domain.entities.Estoque;
-import br.com.orderhub.core.domain.enums.StatusPagamento;
-import br.com.orderhub.core.domain.usecases.estoques.BaixarEstoqueMultiplo; // Importar
-import br.com.orderhub.core.dto.estoques.ItemEstoqueDTO;
-import br.com.orderhub.core.dto.pagamentos.PagamentoDTO;
-import br.com.orderhub.core.dto.pedidos.PedidoDTO;
-import br.com.orderhub.core.dto.produtos.ProdutoDTO;
+import br.com.orderhub.core.dto.estoques.AtualizarEstoqueDTO;
+import br.com.orderhub.core.dto.estoques.EstoqueDTO;
 import br.com.orderhub.core.exceptions.EstoqueNaoEncontradoException;
 import br.com.orderhub.core.interfaces.IEstoqueGateway;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.ArgumentCaptor; // Importar
-import org.mockito.Captor; // Importar
-import org.mockito.InjectMocks; // Importar
-import org.mockito.Mock; // Importar
-import org.mockito.MockitoAnnotations; // Importar
-
-
-import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 class EstoqueControllerTest {
-
-    // Mocks para as dependências do Controller
-    @Mock
     private IEstoqueGateway estoqueGateway;
-    @Mock
-    private BaixarEstoqueMultiplo baixarEstoqueMultiplo;
-
-    // Injeta os mocks no controller
-    @InjectMocks
-    private EstoqueController controller;
-
-    // Captor para verificar os argumentos passados ao mock
-    @Captor
-    private ArgumentCaptor<List<ItemEstoqueDTO>> captor;
+    private EstoqueController estoqueController;
 
     @BeforeEach
     void setUp() {
-        MockitoAnnotations.openMocks(this);
-        controller = new EstoqueController(estoqueGateway);
-    }
-
-
-    @Test
-    void deveBaixarEstoquePorPedidoDeFormaAtomica() {
-        ProdutoDTO produtoDTO1 = new ProdutoDTO(10L, "Produto A", "Descrição", 100.0);
-        ProdutoDTO produtoDTO2 = new ProdutoDTO(20L, "Produto B", "Descrição", 200.0);
-        List<Map<String, Object>> listaItens = List.of(Map.of("quantidade", 2, "produto", produtoDTO1), Map.of("quantidade",1, "produto", produtoDTO2));
-        PedidoDTO pedidoDTO = new PedidoDTO(1L, null, new PagamentoDTO(1L, "Adamastor", "email@email.com", 150.0,StatusPagamento.EM_ABERTO), listaItens, null);
-
-        Estoque estoqueProduto10 = new Estoque(10L, 100, LocalDateTime.now(), LocalDateTime.now());
-        Estoque estoqueProduto20 = new Estoque(20L, 50, LocalDateTime.now(), LocalDateTime.now());
-
-        when(estoqueGateway.buscarPorIds(List.of(10L, 20L))).thenReturn(List.of(estoqueProduto10, estoqueProduto20));
-
-        controller.baixarEstoquePorPedido(pedidoDTO);
-
-        verify(estoqueGateway, times(2)).salvar(any(Estoque.class));
-        assertEquals(98, estoqueProduto10.getQuantidadeDisponivel());
-        assertEquals(49, estoqueProduto20.getQuantidadeDisponivel());
+        estoqueGateway = mock(IEstoqueGateway.class);
+        estoqueController = new EstoqueController(estoqueGateway);
     }
 
     @Test
-    void deveReporEstoqueComSucesso() {
-        Long id = 1L;
-        int quantidadeParaRepor = 5;
-        Estoque estoqueInicial = new Estoque(id, 10, LocalDateTime.now(), LocalDateTime.now());
+    void deveBaixarEstoqueComSucesso() throws EstoqueNaoEncontradoException {
+        AtualizarEstoqueDTO dto = new AtualizarEstoqueDTO(1L, 5);
+        Estoque estoque = new Estoque(1L, 10);
+        Estoque estoqueAtualizado = new Estoque(1L, 5);
 
-        when(estoqueGateway.buscarPorId(id)).thenReturn(Optional.of(estoqueInicial));
-        when(estoqueGateway.buscarPorId(id)).thenReturn(Optional.of(estoqueInicial));
+        when(estoqueGateway.consultarEstoquePorIdProduto(1L)).thenReturn(estoque);
+        when(estoqueGateway.baixarEstoque(any())).thenReturn(estoqueAtualizado);
 
+        EstoqueDTO resultado = estoqueController.baixarEstoque(dto);
 
-        Estoque result = controller.repor(id, quantidadeParaRepor);
-
-        assertNotNull(result);
-        assertEquals(15, result.getQuantidadeDisponivel());
-        verify(estoqueGateway).salvar(any(Estoque.class));
+        assertEquals(1L, resultado.idProduto());
+        assertEquals(5, resultado.quantidadeDisponivel());
     }
 
     @Test
-    void deveBaixarEstoqueComSucesso() {
-        Long id = 2L;
-        int quantidadeParaBaixar = 3;
-        Estoque estoqueInicial = new Estoque(id, 8, LocalDateTime.now(), LocalDateTime.now());
+    void deveReporEstoqueComSucesso() throws EstoqueNaoEncontradoException {
+        AtualizarEstoqueDTO dto = new AtualizarEstoqueDTO(1L, 5);
+        Estoque estoque = new Estoque(1L, 10);
+        Estoque estoqueAtualizado = new Estoque(1L, 15);
 
-        when(estoqueGateway.buscarPorId(id)).thenReturn(Optional.of(estoqueInicial));
+        when(estoqueGateway.consultarEstoquePorIdProduto(1L)).thenReturn(estoque);
+        when(estoqueGateway.reporEstoque(any())).thenReturn(estoqueAtualizado);
 
-        Estoque result = controller.baixar(id, quantidadeParaBaixar);
+        EstoqueDTO resultado = estoqueController.reporEstoque(dto);
 
-        assertNotNull(result);
-        assertEquals(5, result.getQuantidadeDisponivel());
-        verify(estoqueGateway).salvar(any(Estoque.class));
+        assertEquals(15, resultado.quantidadeDisponivel());
     }
 
     @Test
-    void deveLancarExcecaoAoConsultarEstoqueInexistente() {
-        Long id = 999L;
-        when(estoqueGateway.buscarPorId(id)).thenReturn(Optional.empty());
+    void deveConsultarEstoquePorIdProduto() throws EstoqueNaoEncontradoException {
+        Estoque estoque = new Estoque(1L, 20);
+        when(estoqueGateway.consultarEstoquePorIdProduto(1L)).thenReturn(estoque);
 
-        assertThrows(EstoqueNaoEncontradoException.class, () -> controller.consultarPorId(id));
+        EstoqueDTO resultado = estoqueController.consultarEstoquePorIdProduto(1L);
+
+        assertEquals(20, resultado.quantidadeDisponivel());
+    }
+
+    @Test
+    void deveAdicionarProdutoNoEstoque() throws EstoqueNaoEncontradoException {
+        AtualizarEstoqueDTO dto = new AtualizarEstoqueDTO(2L, 10);
+        Estoque novoEstoque = new Estoque(2L, 10);
+
+        when(estoqueGateway.adicionarProdutoNoEstoque(any())).thenReturn(novoEstoque);
+
+        EstoqueDTO resultado = estoqueController.adicionarProdutoNoEstoque(dto);
+
+        assertEquals(2L, resultado.idProduto());
+        assertEquals(10, resultado.quantidadeDisponivel());
+    }
+
+    @Test
+    void deveRemoverProdutoDoEstoque() throws EstoqueNaoEncontradoException {
+        Estoque estoque = new Estoque(1L, 20);
+        when(estoqueGateway.consultarEstoquePorIdProduto(1L)).thenReturn(estoque);
+        doNothing().when(estoqueGateway).removerProdutoNoEstoque(1L);
+
+        assertDoesNotThrow(() -> estoqueController.removerProdutoNoEstoque(1L));
+        verify(estoqueGateway, times(1)).removerProdutoNoEstoque(1L);
     }
 }

@@ -64,7 +64,7 @@ public class FecharOrdemPagamentoTest {
 
             Exception ex = assertThrows(OrdemPagamentoNaoEncontradaException.class, () -> fecharOrdemPagamento.run(id, status));
 
-            assertEquals("Ordem de pagamento com id 2 não encontrada", ex.getMessage());
+            assertEquals("Ordem de pagamento com idProduto 2 não encontrada", ex.getMessage());
             verify(gateway).buscarOrderPagamentoPorId(id);
         }
 }

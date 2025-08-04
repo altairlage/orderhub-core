@@ -58,7 +58,7 @@ public class CriarPedido {
 
                     produto = produtoGateway.buscarPorId(idProduto);
                     if (produto == null) {
-                        throw new ProdutoNaoEncontradoException("Produto com id: " + idProduto + " não encontrado");
+                        throw new ProdutoNaoEncontradoException("Produto com idProduto: " + idProduto + " não encontrado");
                     }
                 }
                 Map<String, Object> mapProduto = new HashMap<>();

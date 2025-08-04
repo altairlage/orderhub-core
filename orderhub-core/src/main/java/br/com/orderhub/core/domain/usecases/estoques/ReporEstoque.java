@@ -12,13 +12,17 @@ public class ReporEstoque {
         this.estoqueGateway = estoqueGateway;
     }
 
-    public void executar(Long id, int quantidade) {
-        Estoque estoque = estoqueGateway.buscarPorId(id)
-            .orElseThrow(() -> new EstoqueNaoEncontradoException(
-                "Estoque não encontrado para o ID: " + id
-            ));
+    public Estoque run(Estoque estoqueDTO) {
+        if (estoqueDTO.getQuantidadeDisponivel() <= 0) {
+            throw new IllegalArgumentException("A quantidade solicitada para repor o estoque deve ser maior que zero.");
+        }
 
-        estoque.reporEstoque(quantidade);
-        estoqueGateway.salvar(estoque);
+        Estoque produtoEmEstoque = estoqueGateway.consultarEstoquePorIdProduto(estoqueDTO.getIdProduto());
+
+        if (produtoEmEstoque == null) {
+            throw new EstoqueNaoEncontradoException("Produto de ID " + estoqueDTO.getIdProduto() + " não encontrado no estoque");
+        }
+
+        return estoqueGateway.reporEstoque(estoqueDTO);
     }
 }
