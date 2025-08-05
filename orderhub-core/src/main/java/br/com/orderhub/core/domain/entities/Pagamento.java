@@ -9,24 +9,27 @@ import lombok.Getter;
 @EqualsAndHashCode
 public class Pagamento {
     private Long id;
+    private Long idPedido;
     private String nomeCliente;
     private String emailCliente;
     private Double valorTotalOrdemPagamento;
     private StatusPagamento status;
 
-    public Pagamento(Long id, String nomeCliente, String emailCliente, Double valorTotalOrdemPagamento, StatusPagamento status) {
+    public Pagamento(Long id, Long idPedido, String nomeCliente, String emailCliente, Double valorTotalOrdemPagamento, StatusPagamento status) {
         setId(id);
+        setIdPedido(idPedido);
         setNomeCliente(nomeCliente);
         setEmailCliente(emailCliente);
         setValorTotalOrdemPagamento(valorTotalOrdemPagamento);
         setStatus(status);
     }
 
-    public Pagamento(String nomeCliente, String emailCliente, Double valorTotalOrdemPagamento, StatusPagamento status) {
-        this.nomeCliente = nomeCliente;
-        this.emailCliente = emailCliente;
-        this.valorTotalOrdemPagamento = valorTotalOrdemPagamento;
-        this.status = status;
+    public Pagamento(Long idPedido, String nomeCliente, String emailCliente, Double valorTotalOrdemPagamento, StatusPagamento status) {
+        setId(idPedido);
+        setNomeCliente(nomeCliente);
+        setEmailCliente(emailCliente);
+        setValorTotalOrdemPagamento(valorTotalOrdemPagamento);
+        setStatus(status);
     }
 
     public void setStatus(StatusPagamento status) {
@@ -42,6 +45,13 @@ public class Pagamento {
             throw new IllegalArgumentException("ID inválido ou nulo");
         }
         this.id = id;
+    }
+
+    public void setIdPedido(Long idPedido) {
+        if (id == null || id < 1) {
+            throw new IllegalArgumentException("ID de pedido inválido ou nulo");
+        }
+        this.idPedido = idPedido;
     }
 
     public void setNomeCliente(String nomeCliente) {

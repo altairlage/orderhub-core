@@ -15,6 +15,7 @@ public class GerarOrdemPagamento {
     public Pagamento run(CriarPagamentoDTO criarPagamentoDTO) throws Exception {
         try{
             Pagamento pagamentoDTO = new Pagamento(
+                    criarPagamentoDTO.idPedido(),
                     criarPagamentoDTO.nomeCliente(),
                     criarPagamentoDTO.emailCliente(),
                     criarPagamentoDTO.valorTotalOrdemPagamento(),
