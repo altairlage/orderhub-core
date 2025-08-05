@@ -17,7 +17,7 @@ public class PedidoPresenter {
                 pedido.getIdPedido(),
                 pedido.getIdCliente(),
                 pedido.getIdPagamento(),
-                ToProductListDTO(pedido.getListaQtdProdutos()),
+                pedido.getListaQtdProdutos(),
                 pedido.getStatus());
     }
 
@@ -26,7 +26,7 @@ public class PedidoPresenter {
                 pedidoDTO.idPedido(),
                 pedidoDTO.idCliente(),
                 pedidoDTO.idPagamento(),
-                ToProductListDomain(pedidoDTO.listaQtdProdutos()),
+                pedidoDTO.listaQtdProdutos(),
                 pedidoDTO.status());
     }
 
@@ -39,57 +39,57 @@ public class PedidoPresenter {
         return listaResposta;
     }
 
-    public static List<Map<String, Object>> ToProductListDTO(List<Map<String, Object>> produtosLista) {
-        List<Map<String, Object>> listaRespostaDTO = new ArrayList<>();
-
-        for (Map<String, Object> map : produtosLista) {
-            Integer quantidade = null;
-            Produto produto = null;
-
-            for (Map.Entry<String, Object> entry : map.entrySet()) {
-                if (entry.getKey().equals("quantidade")) {
-                    quantidade = entry.getValue() == null ? 0 : Integer.parseInt(entry.getValue().toString());
-                }
-
-                if (entry.getKey().equals("produto")) {
-                    produto = (Produto) entry.getValue();
-                }
-            }
-
-            ProdutoDTO produtoDTO = ProdutoPresenter.ToDTO(produto);
-            Map<String, Object> mapProdutoDTO = new HashMap<>();
-            mapProdutoDTO.put("quantidade", quantidade);
-            mapProdutoDTO.put("produto", produtoDTO);
-
-            listaRespostaDTO.add(mapProdutoDTO);
-        }
-        return listaRespostaDTO;
-    }
-
-    public static List<Map<String, Object>> ToProductListDomain(List<Map<String, Object>> produtosDTOLista) {
-        List<Map<String, Object>> listaRespostaDomain = new ArrayList<>();
-
-        for (Map<String, Object> map : produtosDTOLista) {
-            Integer quantidade = null;
-            ProdutoDTO produtoDTO = null;
-
-            for (Map.Entry<String, Object> entry : map.entrySet()) {
-                if (entry.getKey().equals("quantidade")) {
-                    quantidade = Integer.parseInt(entry.getValue().toString());
-                }
-
-                if (entry.getKey().equals("produto")) {
-                    produtoDTO = (ProdutoDTO) entry.getValue();
-                }
-            }
-
-            Produto produto = ProdutoPresenter.ToDomain(produtoDTO);
-            Map<String, Object> item = new HashMap<>();
-            item.put("quantidade", quantidade);
-            item.put("produto", produto);
-
-            listaRespostaDomain.add(item);
-        }
-        return listaRespostaDomain;
-    }
+//    public static List<Map<String, Object>> ToProductListDTO(List<Map<String, Object>> produtosLista) {
+//        List<Map<String, Object>> listaRespostaDTO = new ArrayList<>();
+//
+//        for (Map<String, Object> map : produtosLista) {
+//            Integer quantidade = null;
+//            Long idProduto = null;
+//
+//            for (Map.Entry<String, Object> entry : map.entrySet()) {
+//                if (entry.getKey().equals("quantidade")) {
+//                    quantidade = entry.getValue() == null ? 0 : Integer.parseInt(entry.getValue().toString());
+//                }
+//
+//                if (entry.getKey().equals("idProduto")) {
+//                    idProduto = entry.getValue();
+//                }
+//            }
+//
+//            ProdutoDTO produtoDTO = ProdutoPresenter.ToDTO(produto);
+//            Map<String, Object> mapProdutoDTO = new HashMap<>();
+//            mapProdutoDTO.put("quantidade", quantidade);
+//            mapProdutoDTO.put("idProduto", idProduto);
+//
+//            listaRespostaDTO.add(mapProdutoDTO);
+//        }
+//        return listaRespostaDTO;
+//    }
+//
+//    public static List<Map<String, Object>> ToProductListDomain(List<Map<String, Object>> produtosDTOLista) {
+//        List<Map<String, Object>> listaRespostaDomain = new ArrayList<>();
+//
+//        for (Map<String, Object> map : produtosDTOLista) {
+//            Integer quantidade = null;
+//            ProdutoDTO produtoDTO = null;
+//
+//            for (Map.Entry<String, Object> entry : map.entrySet()) {
+//                if (entry.getKey().equals("quantidade")) {
+//                    quantidade = Integer.parseInt(entry.getValue().toString());
+//                }
+//
+//                if (entry.getKey().equals("produto")) {
+//                    produtoDTO = (ProdutoDTO) entry.getValue();
+//                }
+//            }
+//
+//            Produto produto = ProdutoPresenter.ToDomain(produtoDTO);
+//            Map<String, Object> item = new HashMap<>();
+//            item.put("quantidade", quantidade);
+//            item.put("produto", produto);
+//
+//            listaRespostaDomain.add(item);
+//        }
+//        return listaRespostaDomain;
+//    }
 }

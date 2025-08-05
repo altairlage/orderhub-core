@@ -30,6 +30,13 @@ public class Pedido {
         setStatus(status);
     }
 
+    public Pedido(Long idPedido, Long idCliente, List<Map<String, Object>> listaQtdProdutos, StatusPedido status) {
+        setIdPedido(idPedido);
+        setIdCliente(idCliente);
+        setListaQtdProdutos(listaQtdProdutos);
+        setStatus(status);
+    }
+
     public void setIdPedido(Long idPedido) {
         if (idPedido == null || idPedido <= 0) {
             throw new IllegalArgumentException("ID do pedido está vazio ou é inválido");
@@ -45,9 +52,6 @@ public class Pedido {
     }
 
     public void setIdPagamento(Long idPagamento) {
-        if (idPagamento == null || idPagamento <= 0) {
-            throw new IllegalArgumentException("ID do pagamento está vazio ou é inválido");
-        }
         this.idPagamento = idPagamento;
     }
 

@@ -99,7 +99,7 @@ public class PedidoControllerTest {
 
     @Test
     public void deveEditarPedidoComSucesso(){
-        Pedido pedidoAtualizado = new Pedido(1L, idCliente, idPagamento1, Arrays.asList(mapProduto2, mapProduto1), StatusPedido.FECHADO_PELO_CLIENTE);
+        Pedido pedidoAtualizado = new Pedido(1L, idCliente, idPagamento1, Arrays.asList(mapProduto2, mapProduto1), StatusPedido.FECHADO_SEM_CREDITO);
 
         when(pedidoGateway.buscarPorId(any(Long.class))).thenReturn(pedidoCriado1);
         when(pedidoGateway.editar(any(Pedido.class), any(Pedido.class))).thenReturn(pedidoAtualizado);
@@ -107,7 +107,7 @@ public class PedidoControllerTest {
         PedidoDTO resultado = controller.editarPedido(PedidoPresenter.ToDTO(pedidoAtualizado));
 
         assertNotNull(resultado);
-        assertEquals(StatusPedido.FECHADO_PELO_CLIENTE, resultado.status());
+        assertEquals(StatusPedido.FECHADO_SEM_CREDITO, resultado.status());
         assertEquals(idPagamento1, resultado.idPagamento());
         verify(pedidoGateway).editar(pedidoCriado1, pedidoAtualizado);
     }
