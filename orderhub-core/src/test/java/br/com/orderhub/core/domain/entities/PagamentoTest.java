@@ -16,9 +16,9 @@ public class PagamentoTest {
 
         @Test
         public void deveCriarPagamentoSomenteComStatus() {
-            Pagamento pagamento = new Pagamento("Adamastor", "email@email.com", 150.0, StatusPagamento.EM_ABERTO);
+            Pagamento pagamento = new Pagamento(1L, "Adamastor", "email@email.com", 150.0, StatusPagamento.EM_ABERTO);
 
-            assertNull(pagamento.getId());
+            assertNotNull(pagamento.getId());
             assertEquals(StatusPagamento.EM_ABERTO, pagamento.getStatus());
         }
 

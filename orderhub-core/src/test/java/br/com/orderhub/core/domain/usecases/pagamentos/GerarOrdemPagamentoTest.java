@@ -23,9 +23,10 @@ public class GerarOrdemPagamentoTest {
 
     @Test
     public void deveGerarOrdemPagamentoComSucesso() throws Exception {
-        Pagamento fakeRequest = new Pagamento("Adamastor", "email@email.com", 150.0, StatusPagamento.EM_ABERTO);
+        Pagamento fakeRequest = new Pagamento(1L, "Adamastor", "email@email.com", 150.0, StatusPagamento.EM_ABERTO);
 
         CriarPagamentoDTO criarPagamentoDTO = new CriarPagamentoDTO(
+                1L,
                 "Adamastor",
                 "email@email.com",
                 150.0,
@@ -44,9 +45,10 @@ public class GerarOrdemPagamentoTest {
 
     @Test
     public void deveLancarRuntimeExceptionAoFalharGeracao() throws Exception {
-        Pagamento fakeRequest = new Pagamento("Adamastor", "email@email.com", 150.0, StatusPagamento.EM_ABERTO);
+        Pagamento fakeRequest = new Pagamento(1L, "Adamastor", "email@email.com", 150.0, StatusPagamento.EM_ABERTO);
 
         CriarPagamentoDTO criarPagamentoDTO = new CriarPagamentoDTO(
+                1L,
                 "Adamastor",
                 "email@email.com",
                 150.0,

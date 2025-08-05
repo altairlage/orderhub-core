@@ -49,9 +49,10 @@ public class PagamentoControllerTest {
 
     @Test
     public void deveGerarOrdemPagamento() throws Exception {
-        Pagamento fakeRequest = new Pagamento("Adamastor", "email@email.com", 150.0, StatusPagamento.EM_ABERTO);
+        Pagamento fakeRequest = new Pagamento(1L, "Adamastor", "email@email.com", 150.0, StatusPagamento.EM_ABERTO);
 
         CriarPagamentoDTO criarPagamentoDTO = new CriarPagamentoDTO(
+                1L,
                 "Adamastor",
                 "email@email.com",
                 150.0,
