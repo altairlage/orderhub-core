@@ -25,7 +25,7 @@ public class Pagamento {
     }
 
     public Pagamento(Long idPedido, String nomeCliente, String emailCliente, Double valorTotalOrdemPagamento, StatusPagamento status) {
-        setId(idPedido);
+        setIdPedido(idPedido);
         setNomeCliente(nomeCliente);
         setEmailCliente(emailCliente);
         setValorTotalOrdemPagamento(valorTotalOrdemPagamento);
@@ -48,7 +48,7 @@ public class Pagamento {
     }
 
     public void setIdPedido(Long idPedido) {
-        if (id == null || id < 1) {
+        if (idPedido == null || idPedido < 1) {
             throw new IllegalArgumentException("ID de pedido inválido ou nulo");
         }
         this.idPedido = idPedido;

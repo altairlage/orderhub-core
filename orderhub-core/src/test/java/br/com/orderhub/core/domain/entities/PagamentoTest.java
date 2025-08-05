@@ -8,7 +8,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class PagamentoTest {
         @Test
         public void deveCriarPagamentoComIdEStatus() {
-            Pagamento pagamento = new Pagamento(1L, "Adamastor", "email@email.com", 150.0, StatusPagamento.EM_ABERTO);
+            Pagamento pagamento = new Pagamento(1L, 1L, "Adamastor", "email@email.com", 150.0, StatusPagamento.EM_ABERTO);
 
             assertEquals(1L, pagamento.getId());
             assertEquals(StatusPagamento.EM_ABERTO, pagamento.getStatus());
@@ -16,7 +16,7 @@ public class PagamentoTest {
 
         @Test
         public void deveCriarPagamentoSomenteComStatus() {
-            Pagamento pagamento = new Pagamento(1L, "Adamastor", "email@email.com", 150.0, StatusPagamento.EM_ABERTO);
+            Pagamento pagamento = new Pagamento(1L, 1L, "Adamastor", "email@email.com", 150.0, StatusPagamento.EM_ABERTO);
 
             assertNotNull(pagamento.getId());
             assertEquals(StatusPagamento.EM_ABERTO, pagamento.getStatus());

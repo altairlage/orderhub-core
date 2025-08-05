@@ -32,7 +32,7 @@ public class GerarOrdemPagamentoTest {
                 150.0,
                 StatusPagamento.EM_ABERTO
         );
-        Pagamento pagamentoMock = new Pagamento(1L, "Adamastor", "email@email.com", 150.0, StatusPagamento.EM_ABERTO);
+        Pagamento pagamentoMock = new Pagamento(1L, 1L, "Adamastor", "email@email.com", 150.0, StatusPagamento.EM_ABERTO);
 
         when(gateway.gerarOrdemPagamento(fakeRequest)).thenReturn(pagamentoMock);
 
