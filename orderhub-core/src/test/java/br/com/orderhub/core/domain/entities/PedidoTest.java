@@ -24,23 +24,15 @@ public class PedidoTest {
         mapProduto2.put("quantidade", 2);
         mapProduto2.put("produto", produtoCriado2);
 
-        Cliente cliente = new Cliente(1L,
-                "Jorge",
-                "123.456.789-10",
-                "07/12/2015",
-                "",
-                "(99) 99999-9999",
-                "email@email.com",
-                ""
-        );
+        Long idCliente = 1L;
+        Long idPagamento1 = 1L;
 
-        Pedido resultado = new Pedido(1L, cliente, pagamentoCriado, Arrays.asList(mapProduto1, mapProduto2), StatusPedido.ABERTO);
+        Pedido resultado = new Pedido(1L, idCliente, idPagamento1, Arrays.asList(mapProduto1, mapProduto2), StatusPedido.ABERTO);
 
         assertEquals(1L, resultado.getIdPedido());
         assertEquals(StatusPedido.ABERTO, resultado.getStatus());
-        assertEquals(1L, resultado.getCliente().getId());
-        assertEquals(pagamentoCriado, resultado.getPagamento());
-        assertEquals(100.0, resultado.calcularValorTotal());
+        assertEquals(idCliente, resultado.getIdCliente());
+        assertEquals(idPagamento1, resultado.getIdPagamento());
         assertFalse(resultado.getListaQtdProdutos().isEmpty());
 
     }
@@ -57,17 +49,11 @@ public class PedidoTest {
         mapProduto2.put("quantidade", 2);
         mapProduto2.put("produto", produtoCriado2);
 
-        Cliente cliente = new Cliente(1L,
-                "Jorge",
-                "123.456.789-10",
-                "07/12/2015",
-                "",
-                "(99) 99999-9999",
-                "email@email.com",
-                "");
+        Long idCliente = 1L;
+        Long idPagamento1 = 1L;
 
-        Pedido pedido1 = new Pedido(1L, cliente, pagamentoCriado, Arrays.asList(mapProduto1, mapProduto2), StatusPedido.ABERTO);
-        Pedido pedido2 = new Pedido(1L, cliente, pagamentoCriado, Arrays.asList(mapProduto1, mapProduto2), StatusPedido.ABERTO);
+        Pedido pedido1 = new Pedido(1L, idCliente, idPagamento1, Arrays.asList(mapProduto1, mapProduto2), StatusPedido.ABERTO);
+        Pedido pedido2 = new Pedido(1L, idCliente, idPagamento1, Arrays.asList(mapProduto1, mapProduto2), StatusPedido.ABERTO);
 
         assertEquals(pedido1, pedido2);
     }
@@ -84,17 +70,11 @@ public class PedidoTest {
         mapProduto2.put("quantidade", 2);
         mapProduto2.put("produto", produtoCriado2);
 
-        Cliente cliente = new Cliente(1L,
-                "Jorge",
-                "123.456.789-10",
-                "07/12/2015",
-                "",
-                "(99) 99999-9999",
-                "email@email.com",
-                "");
+        Long idCliente = 1L;
+        Long idPagamento1 = 1L;
 
-        Pedido pedido1 = new Pedido(1L, cliente, pagamentoCriado, Arrays.asList(mapProduto1, mapProduto2), StatusPedido.ABERTO);
-        Pedido pedido2 = new Pedido(1L, cliente, pagamentoCriado, Arrays.asList(mapProduto1, mapProduto2), StatusPedido.ABERTO);
+        Pedido pedido1 = new Pedido(1L, idCliente, idPagamento1, Arrays.asList(mapProduto1, mapProduto2), StatusPedido.ABERTO);
+        Pedido pedido2 = new Pedido(1L, idCliente, idPagamento1, Arrays.asList(mapProduto1, mapProduto2), StatusPedido.ABERTO);
 
         assertEquals(pedido1.hashCode(), pedido2.hashCode());
     }

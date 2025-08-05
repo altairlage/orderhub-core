@@ -9,7 +9,6 @@ import br.com.orderhub.core.interfaces.IPedidoGateway;
 public class EditarPedido {
     private final IPedidoGateway pedidoGateway;
 
-
     public EditarPedido(IPedidoGateway pedidoGateway) {
         this.pedidoGateway = pedidoGateway;
     }
