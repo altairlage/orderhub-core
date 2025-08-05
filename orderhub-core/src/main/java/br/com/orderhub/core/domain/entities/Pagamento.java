@@ -25,7 +25,7 @@ public class Pagamento {
     }
 
     public Pagamento(Long idPedido, String nomeCliente, String emailCliente, Double valorTotalOrdemPagamento, StatusPagamento status) {
-        setId(idPedido);
+        setIdPedido(idPedido);
         setNomeCliente(nomeCliente);
         setEmailCliente(emailCliente);
         setValorTotalOrdemPagamento(valorTotalOrdemPagamento);
